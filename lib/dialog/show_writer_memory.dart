@@ -5,7 +5,6 @@ Future<void> showMemoryInputDialog(
   String? initialTimerText, // 예: "00시간 00분 00초"
   void Function(String date, String content)? onSave,
 }) async {
-  final theme = Theme.of(context);
   DateTime? pickedDate;
   String dateDisplay = '20xx. xx. xx';
   final contentController = TextEditingController();
@@ -274,39 +273,4 @@ Future<void> showMemoryInputDialog(
       );
     },
   );
-}
-
-class _PillButton extends StatelessWidget {
-  final String label;
-  final bool filled;
-  final VoidCallback onPressed;
-  const _PillButton({
-    super.key,
-    required this.label,
-    required this.onPressed,
-    this.filled = true,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final bg = filled ? const Color(0xFF2B6C73) : Colors.white;
-    final fg = filled ? Colors.white : const Color(0xFF2B6C73);
-
-    return SizedBox(
-      height: 40,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: bg,
-          foregroundColor: fg,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(999),
-            side: BorderSide(color: const Color(0xFF2B6C73), width: 1.5),
-          ),
-          elevation: 0,
-        ),
-        onPressed: onPressed,
-        child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
-      ),
-    );
-  }
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:intl/intl.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
-import 'package:pif_frontend/dialog/show_memory_write.dart';
 import 'package:pif_frontend/dialog/show_writer_memory.dart';
 
 class TimerScreen extends StatefulWidget {

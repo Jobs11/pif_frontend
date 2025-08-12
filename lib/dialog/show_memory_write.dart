@@ -153,7 +153,7 @@ void showMemoryWrite(BuildContext context, String title, String message) {
                       horizontal: 16,
                       vertical: 10,
                     ),
-                    backgroundColor: const Color(0xFF146467).withOpacity(0.9),
+                    backgroundColor: const Color(0xE6146467),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

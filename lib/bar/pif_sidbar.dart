@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pif_frontend/screen/sns_screen.dart';
+import 'package:pif_frontend/screen/storage_screen.dart';
+import 'package:pif_frontend/screen/timer_screen.dart';
 
 class PifSidbar extends StatelessWidget {
   const PifSidbar({super.key});
@@ -54,7 +57,10 @@ class PifSidbar extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context); // 닫기
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TimerScreen()),
+                    ); // 닫기
                     // 홈 화면 이동
                   },
                 ),
@@ -73,7 +79,10 @@ class PifSidbar extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => StorageScreen()),
+                    );
                     // 설정 화면 이동
                   },
                 ),
@@ -92,7 +101,10 @@ class PifSidbar extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SnsScreen()),
+                    );
                     // 설정 화면 이동
                   },
                 ),
