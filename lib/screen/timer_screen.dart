@@ -19,6 +19,8 @@ class _TimerScreenState extends State<TimerScreen> {
   bool isRuning = false;
   late Timer timer;
   String? startDate;
+  String? year, month, day;
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void onTick(Timer timer) {
@@ -41,8 +43,12 @@ class _TimerScreenState extends State<TimerScreen> {
     final now = DateTime.now();
     startDate = DateFormat('yyyy. MM. dd. HH:mm:ss').format(now);
 
+    print("year: $year, month: $month, day: $day");
     setState(() {
       isRuning = true;
+      year = startDate.toString().split(" ")[0].replaceAll(".", "");
+      month = startDate.toString().split(" ")[1].replaceAll(".", "");
+      day = startDate.toString().split(" ")[2].replaceAll(".", "");
     });
   }
 
@@ -187,10 +193,11 @@ class _TimerScreenState extends State<TimerScreen> {
                     // showMemoryWrite(context, 'dd', 'dd');
                     showMemoryInputDialog(
                       context,
-                      initialTimerText: '01시간 23분 45초',
-                      onSave: (date, content) {
-                        // 저장 로직
-                      },
+                      saveDate: isRuning ? startDate : '20xx. xx. xx. 00:00:00',
+                      saveTime: format(totalSeconds),
+                      // onSave: (date, content) {
+                      //   // 저장 로직
+                      // },
                     );
                   },
                   child: Container(

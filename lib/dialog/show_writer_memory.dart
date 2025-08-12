@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 Future<void> showMemoryInputDialog(
   BuildContext context, {
-  String? initialTimerText, // 예: "00시간 00분 00초"
-  void Function(String date, String content)? onSave,
+  String? saveDate, // 예: "00시간 00분 00초"
+  String? saveTime,
+  // void Function(String date, String content)? onSave,
 }) async {
-  DateTime? pickedDate;
-  String dateDisplay = '20xx. xx. xx';
   final contentController = TextEditingController();
+  String hour = saveTime.toString().split(":")[0];
+  String minute = saveTime.toString().split(":")[1];
+  String second = saveTime.toString().split(":")[2];
+
+  String plusTime = '$hour시간 $minute분 $second초';
 
   await showDialog(
     context: context,
@@ -22,23 +26,6 @@ Future<void> showMemoryInputDialog(
         clipBehavior: Clip.antiAlias,
         content: StatefulBuilder(
           builder: (context, setState) {
-            Future<void> pickDate() async {
-              final now = DateTime.now();
-              final DateTime? d = await showDatePicker(
-                context: context,
-                initialDate: pickedDate ?? now,
-                firstDate: DateTime(1900),
-                lastDate: DateTime(2100),
-              );
-              if (d != null) {
-                setState(() {
-                  pickedDate = d;
-                  dateDisplay =
-                      '${d.year}.${d.month.toString().padLeft(2, '0')}.${d.day.toString().padLeft(2, '0')}';
-                });
-              }
-            }
-
             return SizedBox(
               width: 360, // 필요시 조절
               height: 640, // 필요시 조절 (이미지 비율에 맞게)
@@ -101,28 +88,26 @@ Future<void> showMemoryInputDialog(
                                           ),
                                         ),
                                         const SizedBox(height: 8),
-                                        GestureDetector(
-                                          onTap: pickDate,
-                                          child: Container(
-                                            height: 36,
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10,
+                                        Container(
+                                          height: 36,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFFFF8E7),
+                                            borderRadius: BorderRadius.circular(
+                                              6,
                                             ),
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFFFFF8E7),
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              border: Border.all(
-                                                color: Colors.black87,
-                                                width: 1,
-                                              ),
+                                            border: Border.all(
+                                              color: Colors.black87,
+                                              width: 1,
                                             ),
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              dateDisplay,
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                              ),
+                                          ),
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            saveDate ?? '20xx. xx. xx 00:00:00',
+                                            style: const TextStyle(
+                                              fontSize: 14,
                                             ),
                                           ),
                                         ),
@@ -162,7 +147,9 @@ Future<void> showMemoryInputDialog(
                                           ),
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            initialTimerText ?? '00시간 00분 00초',
+                                            (saveTime == null)
+                                                ? '00시간 00분 00초'
+                                                : plusTime,
                                             style: const TextStyle(
                                               fontSize: 14,
                                             ),
@@ -238,19 +225,29 @@ Future<void> showMemoryInputDialog(
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFFFDCAB),
-                                        borderRadius: BorderRadius.circular(30),
-                                        border: Border.all(color: Colors.black),
-                                      ),
-                                      child: Text(
-                                        textAlign: TextAlign.center,
-                                        '취소',
-                                        style: TextStyle(
-                                          color: Color(0xFF5A3A1A),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        // 설정 화면 이동
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFFFDCAB),
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                          border: Border.all(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          textAlign: TextAlign.center,
+                                          '취소',
+                                          style: TextStyle(
+                                            color: Color(0xFF5A3A1A),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
