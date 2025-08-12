@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
+import 'package:pif_frontend/model/member.dart';
+import 'package:pif_frontend/screen/login_screens.dart';
+import 'package:pif_frontend/service/memberservice.dart';
 
 class MemberScreen extends StatefulWidget {
   const MemberScreen({super.key});
@@ -13,6 +17,67 @@ class _MemberScreenState extends State<MemberScreen> {
   bool showDropdown = false; // 드롭다운 표시 여부
   String? selectedValue;
 
+  final nameController = TextEditingController();
+  final nicknameController = TextEditingController();
+  final phoneSController = TextEditingController();
+  final phoneMController = TextEditingController();
+  final phoneEController = TextEditingController();
+  final emailController = TextEditingController();
+  final idController = TextEditingController();
+  final passwordController = TextEditingController();
+  final conpasswordController = TextEditingController();
+
+  String birtdata = '';
+
+  bool _loading = false;
+
+  Future<void> _register() async {
+    setState(() => _loading = true);
+
+    final member = Member(
+      mName: nameController.text.trim(),
+      mNickname: nicknameController.text.trim(),
+      mBirth: birtdata,
+      mPhone:
+          '${phoneSController.text.trim()}-${phoneMController.text.trim()}-${phoneEController.text.trim()}',
+      mEmail: '${emailController.text.trim()}@$selectedValue',
+      mId: idController.text.trim(),
+      mPassword: passwordController.text.trim(),
+    );
+
+    try {
+      await Memberservice.registerMember(member); // 서버는 200/201만 주면 OK
+
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "가입 완료!",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      // 성공 시에만 페이지 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => LoginScreen()),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "가입 실패! $e",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -24,6 +89,8 @@ class _MemberScreenState extends State<MemberScreen> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        birtdata =
+            '${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}';
       });
     }
   }
@@ -56,16 +123,42 @@ class _MemberScreenState extends State<MemberScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  membershipData('아이디 ( 15자 이내 )', '아이디를 입력해주세요.', 15),
+                  membershipData(
+                    '아이디 ( 15자 이내 )',
+                    '아이디를 입력해주세요.',
+                    15,
+                    idController,
+                  ),
                   SizedBox(height: 6),
-                  membershipData('비밀번호 ( 15자 이내 )', '비밀번호를 입력해주세요.', 15),
+                  membershipData(
+                    '비밀번호 ( 15자 이내 )',
+                    '비밀번호를 입력해주세요.',
+                    15,
+                    passwordController,
+                  ),
                   SizedBox(height: 6),
-                  membershipData('비밀번호 ( 15자 이내 )', '비밀번호를 한번 더 입력해주세요.', 15),
+                  membershipData(
+                    '비밀번호 ( 15자 이내 )',
+                    '비밀번호를 한번 더 입력해주세요.',
+                    15,
+                    conpasswordController,
+                  ),
                   SizedBox(height: 6),
-                  membershipData('이름 ( 10자 이내 )', '이름을 입력해주세요.', 10),
+                  membershipData(
+                    '이름 ( 10자 이내 )',
+                    '이름을 입력해주세요.',
+                    10,
+                    nameController,
+                  ),
                   SizedBox(height: 6),
-                  membershipData('닉네임 ( 10자 이내 )', '닉네임을 입력해주세요.', 10),
+                  membershipData(
+                    '닉네임 ( 10자 이내 )',
+                    '닉네임을 입력해주세요.',
+                    10,
+                    nicknameController,
+                  ),
                   SizedBox(height: 6),
+                  // 생년월일
                   Column(
                     children: [
                       Row(
@@ -82,6 +175,7 @@ class _MemberScreenState extends State<MemberScreen> {
                       ),
 
                       SizedBox(height: 6),
+
                       Container(
                         width: 330,
                         height: 40,
@@ -129,6 +223,8 @@ class _MemberScreenState extends State<MemberScreen> {
                       ),
                     ],
                   ),
+
+                  // 휴대폰 번호
                   Column(
                     children: [
                       Row(
@@ -165,7 +261,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                   ),
                                   child: SizedBox(
                                     width: 60,
-                                    child: TextField(
+                                    child: TextFormField(
+                                      controller: phoneSController,
                                       textAlign: TextAlign.center,
                                       maxLength: 3,
                                       decoration: InputDecoration(
@@ -174,6 +271,13 @@ class _MemberScreenState extends State<MemberScreen> {
                                             .none, // 테두리 제거 (BoxDecoration에서 그림)
                                         hintText: '010', // 플레이스홀더
                                       ),
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.trim().isEmpty) {
+                                          return '값을 입력해주세요.';
+                                        }
+                                        return null; // 검증 통과
+                                      },
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ),
@@ -198,7 +302,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                   ),
                                   child: SizedBox(
                                     width: 60,
-                                    child: TextField(
+                                    child: TextFormField(
+                                      controller: phoneMController,
                                       textAlign: TextAlign.center,
                                       maxLength: 4,
                                       decoration: InputDecoration(
@@ -207,6 +312,13 @@ class _MemberScreenState extends State<MemberScreen> {
                                             .none, // 테두리 제거 (BoxDecoration에서 그림)
                                         hintText: '1234', // 플레이스홀더
                                       ),
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.trim().isEmpty) {
+                                          return '값을 입력해주세요.';
+                                        }
+                                        return null; // 검증 통과
+                                      },
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ),
@@ -231,7 +343,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                   ),
                                   child: SizedBox(
                                     width: 60,
-                                    child: TextField(
+                                    child: TextFormField(
+                                      controller: phoneEController,
                                       textAlign: TextAlign.center,
                                       maxLength: 4,
                                       decoration: InputDecoration(
@@ -240,6 +353,13 @@ class _MemberScreenState extends State<MemberScreen> {
                                             .none, // 테두리 제거 (BoxDecoration에서 그림)
                                         hintText: '5678', // 플레이스홀더
                                       ),
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.trim().isEmpty) {
+                                          return '값을 입력해주세요.';
+                                        }
+                                        return null; // 검증 통과
+                                      },
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ),
@@ -251,6 +371,7 @@ class _MemberScreenState extends State<MemberScreen> {
                       ),
                     ],
                   ),
+                  // 이메일
                   Column(
                     children: [
                       Row(
@@ -287,7 +408,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                   ),
                                   child: SizedBox(
                                     width: 90,
-                                    child: TextField(
+                                    child: TextFormField(
+                                      controller: emailController,
                                       textAlign: TextAlign.center,
                                       maxLength: 15,
                                       decoration: InputDecoration(
@@ -296,6 +418,13 @@ class _MemberScreenState extends State<MemberScreen> {
                                             .none, // 테두리 제거 (BoxDecoration에서 그림)
                                         hintText: 'qwer1234', // 플레이스홀더
                                       ),
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.trim().isEmpty) {
+                                          return '값을 입력해주세요.';
+                                        }
+                                        return null; // 검증 통과
+                                      },
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ),
@@ -363,26 +492,29 @@ class _MemberScreenState extends State<MemberScreen> {
                     ],
                   ),
                   SizedBox(height: 30),
-                  Container(
-                    width: 304,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xCC86DFD0),
-                      border: Border.all(color: Colors.black, width: 2),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '회원가입',
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: _register,
+                    child: Container(
+                      width: 304,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xCC86DFD0),
+                        border: Border.all(color: Colors.black, width: 2),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '회원가입',
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -394,7 +526,12 @@ class _MemberScreenState extends State<MemberScreen> {
     );
   }
 
-  Column membershipData(String title, String hint, int textLength) {
+  Column membershipData(
+    String title,
+    String hint,
+    int textLength,
+    TextEditingController controller,
+  ) {
     return Column(
       children: [
         Row(
@@ -424,13 +561,20 @@ class _MemberScreenState extends State<MemberScreen> {
                 ),
                 child: SizedBox(
                   width: 280,
-                  child: TextField(
+                  child: TextFormField(
+                    controller: controller,
                     maxLength: textLength,
                     decoration: InputDecoration(
                       counterText: '',
                       border: InputBorder.none, // 테두리 제거 (BoxDecoration에서 그림)
                       hintText: hint, // 플레이스홀더
                     ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return '값을 입력해주세요.';
+                      }
+                      return null; // 검증 통과
+                    },
                     style: TextStyle(fontSize: 18),
                   ),
                 ),

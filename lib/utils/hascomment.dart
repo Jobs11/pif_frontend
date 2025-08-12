@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pif_frontend/model/tempdata.dart';
 
 class Hascomment extends StatefulWidget {
   const Hascomment({super.key});
