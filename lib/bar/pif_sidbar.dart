@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/screen/sns_screen.dart';
 import 'package:pif_frontend/screen/storage_screen.dart';
 import 'package:pif_frontend/screen/timer_screen.dart';
@@ -32,7 +33,7 @@ class PifSidbar extends StatelessWidget {
                         height: 90,
                       ),
                       Text(
-                        '홍길동 님',
+                        CurrentUser.instance.member?.mNickname ?? "손님",
                         style: TextStyle(
                           color: Color(0xFF146467),
                           fontSize: 24,

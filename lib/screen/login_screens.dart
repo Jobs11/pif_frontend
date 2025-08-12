@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/screen/member_screen.dart';
 import 'package:pif_frontend/screen/timer_screen.dart';
+import 'package:pif_frontend/service/memberservice.dart';
+import 'package:pif_frontend/model/currentuser.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +13,52 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _loading = false;
+
+  final idController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> _login() async {
+    setState(() => _loading = true);
+
+    final id = idController.text.trim();
+    final password = passwordController.text.trim();
+
+    try {
+      final member = await Memberservice.login(id, password); // GET 요청
+
+      // 로그인 성공 시 전역 상태나 Provider 등에 저장
+      CurrentUser.instance.member = member;
+
+      Fluttertoast.showToast(
+        msg: "로그인 성공! ${member.mNickname}님 환영합니다.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: const Color(0xAA000000),
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      // 메인 페이지 이동
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => TimerScreen()),
+      );
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "로그인 실패! $e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: const Color(0xAA000000),
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,12 +129,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: SizedBox(
                           width: 250,
-                          child: TextField(
+                          child: TextFormField(
+                            controller: idController,
                             decoration: InputDecoration(
                               border: InputBorder
                                   .none, // 테두리 제거 (BoxDecoration에서 그림)
                               hintText: 'ID', // 플레이스홀더
                             ),
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return '값을 입력해주세요.';
+                              }
+                              return null; // 검증 통과
+                            },
                             style: TextStyle(fontSize: 30),
                           ),
                         ),
@@ -134,12 +190,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     child: SizedBox(
                                       width: 250,
-                                      child: TextField(
+                                      child: TextFormField(
+                                        controller: passwordController,
                                         decoration: InputDecoration(
                                           border: InputBorder
                                               .none, // 테두리 제거 (BoxDecoration에서 그림)
                                           hintText: 'PASSWORD', // 플레이스홀더
                                         ),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().isEmpty) {
+                                            return '값을 입력해주세요.';
+                                          }
+                                          return null; // 검증 통과
+                                        },
                                         style: TextStyle(fontSize: 30),
                                       ),
                                     ),
@@ -157,12 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 15),
                 // 로그인 버튼 칸
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TimerScreen()),
-                    );
-                  },
+                  onTap: _login,
                   child: Container(
                     width: 302,
                     height: 65,

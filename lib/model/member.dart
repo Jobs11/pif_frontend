@@ -42,5 +42,6 @@ class Member {
     'm_email': mEmail,
     'm_id': mId,
     'm_password': mPassword,
+    'm_paint': mPaint,
   };
 }
