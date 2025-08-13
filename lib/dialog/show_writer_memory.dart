@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pif_frontend/model/currentuser.dart';
+import 'package:pif_frontend/screen/timer_screen.dart';
+import 'package:pif_frontend/service/recordservice.dart';
+import 'package:pif_frontend/model/record.dart';
 
 Future<void> showMemoryInputDialog(
   BuildContext context, {
-  String? saveDate, // 예: "00시간 00분 00초"
-  String? saveTime,
+  required String saveDate, // 예: "00시간 00분 00초"
+  required String saveTime,
   // void Function(String date, String content)? onSave,
 }) async {
   final contentController = TextEditingController();
@@ -89,7 +94,7 @@ Future<void> showMemoryInputDialog(
                                         ),
                                         const SizedBox(height: 8),
                                         Container(
-                                          height: 36,
+                                          height: 40,
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 10,
                                           ),
@@ -105,7 +110,7 @@ Future<void> showMemoryInputDialog(
                                           ),
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            saveDate ?? '20xx. xx. xx 00:00:00',
+                                            saveDate,
                                             style: const TextStyle(
                                               fontSize: 14,
                                             ),
@@ -131,7 +136,7 @@ Future<void> showMemoryInputDialog(
                                         ),
                                         const SizedBox(height: 8),
                                         Container(
-                                          height: 36,
+                                          height: 40,
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 10,
                                           ),
@@ -147,9 +152,7 @@ Future<void> showMemoryInputDialog(
                                           ),
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            (saveTime == null)
-                                                ? '00시간 00분 00초'
-                                                : plusTime,
+                                            plusTime,
                                             style: const TextStyle(
                                               fontSize: 14,
                                             ),
@@ -190,7 +193,7 @@ Future<void> showMemoryInputDialog(
                                   maxLines: 8,
                                   style: const TextStyle(fontSize: 14),
                                   decoration: const InputDecoration(
-                                    hintText: '기억할 내용을 입력해주세요.',
+                                    hintText: '간단하게 기억할 내용을 입력해주세요.',
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.symmetric(
                                       horizontal: 12,
@@ -206,19 +209,34 @@ Future<void> showMemoryInputDialog(
                               Row(
                                 children: [
                                   Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFFFDCAB),
-                                        borderRadius: BorderRadius.circular(30),
-                                        border: Border.all(color: Colors.black),
-                                      ),
-                                      child: Text(
-                                        textAlign: TextAlign.center,
-                                        '저장',
-                                        style: TextStyle(
-                                          color: Color(0xFF5A3A1A),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _registerFromDialog(
+                                          context,
+                                          CurrentUser.instance.member!.mId,
+                                          saveDate,
+                                          plusTime,
+                                          contentController.text.trim(),
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFFFDCAB),
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                          border: Border.all(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          textAlign: TextAlign.center,
+                                          '저장',
+                                          style: TextStyle(
+                                            color: Color(0xFF5A3A1A),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -270,4 +288,50 @@ Future<void> showMemoryInputDialog(
       );
     },
   );
+}
+
+Future<void> _registerFromDialog(
+  BuildContext dialogContext,
+  String mId1,
+  String rDate1,
+  String rTime1,
+  String rDecoration1,
+) async {
+  final record = Records(
+    mId: mId1,
+    rDate: rDate1,
+    rTime: rTime1,
+    rDecoration: rDecoration1,
+  );
+
+  try {
+    await Recordservice.registerR(record);
+
+    // 다이얼로그 닫기
+    Navigator.pop(dialogContext, true); // true = 가입 성공
+
+    Fluttertoast.showToast(
+      msg: "작성 완료!",
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: const Color(0xAA000000),
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+
+    // 다이얼로그 닫은 후 페이지 이동
+    // Navigator.pushReplacement(
+    //   dialogContext,
+    //   MaterialPageRoute(builder: (_) => TimerScreen()),
+    // );
+  } catch (e) {
+    Navigator.pop(dialogContext, false); // false = 가입 실패
+
+    Fluttertoast.showToast(
+      msg: "작성 실패! $e",
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: const Color(0xAA000000),
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
 }

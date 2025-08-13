@@ -27,7 +27,8 @@ class PifSidbar extends StatelessWidget {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/images/character/crab.png',
+                        CurrentUser.instance.member?.mPaint ??
+                            'assets/images/addicon/user.png',
                         fit: BoxFit.cover,
                         width: 90,
                         height: 90,

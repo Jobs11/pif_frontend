@@ -42,6 +42,16 @@ class Member {
     'm_email': mEmail,
     'm_id': mId,
     'm_password': mPassword,
-    'm_paint': mPaint,
+  };
+
+  Map<String, dynamic> toJsonPaintOnly() => {'m_paint': mPaint};
+
+  Map<String, dynamic> toJsonUpdate() => {
+    // Dart → JSON 매핑
+    'm_name': mName,
+    'm_nickname': mNickname,
+    'm_phone': mPhone,
+    'm_email': mEmail,
+    'm_password': mPassword,
   };
 }

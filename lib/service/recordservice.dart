@@ -10,7 +10,7 @@ class Recordservice {
   static const String modifyRecord = "modify";
   static const String deleteRecord = "delete";
 
-  static Future<void> registerMember(Record record) async {
+  static Future<void> registerR(Records record) async {
     final url = Uri.parse("$baseUrl/$registerRecord");
     final res = await http
         .post(
@@ -26,15 +26,17 @@ class Recordservice {
     }
   }
 
-  static Future<List<Record>> getRecordList() async {
-    List<Record> recordInstances = [];
-    final url = Uri.parse('$baseUrl/$getRecord');
+  static Future<List<Records>> getRecordList(String id, String date) async {
+    List<Records> recordInstances = [];
+    final url = Uri.parse(
+      '$baseUrl/$getRecord',
+    ).replace(queryParameters: {'m_id': id, 'r_date': date});
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final List<dynamic> records = jsonDecode(response.body);
       for (var record in records) {
-        recordInstances.add(Record.fromJson(record));
+        recordInstances.add(Records.fromJson(record));
       }
       return recordInstances;
     }

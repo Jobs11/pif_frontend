@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:intl/intl.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
@@ -18,7 +19,8 @@ class _TimerScreenState extends State<TimerScreen> {
   int totalSeconds = plusTime;
   bool isRuning = false;
   late Timer timer;
-  String? startDate;
+  String startDate = '0000. 00. 00. 00:00:00';
+  String giveDate = '20xx년 xx월 xx일 00시 00분 00초';
   String? year, month, day;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -41,11 +43,20 @@ class _TimerScreenState extends State<TimerScreen> {
     timer = Timer.periodic(Duration(seconds: 1), onTick);
 
     final now = DateTime.now();
-    startDate = DateFormat('yyyy. MM. dd. HH:mm:ss').format(now);
 
-    print("year: $year, month: $month, day: $day");
+    Fluttertoast.showToast(
+      msg: "타이머 시작",
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: const Color(0xAA000000),
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+
+    // print("year: $year, month: $month, day: $day");
     setState(() {
       isRuning = true;
+      startDate = DateFormat('yyyy. MM. dd. HH:mm:ss').format(now);
+      giveDate = DateFormat('yyyy년 MM월 dd일 HH시 mm분 ss초').format(now);
       year = startDate.toString().split(" ")[0].replaceAll(".", "");
       month = startDate.toString().split(" ")[1].replaceAll(".", "");
       day = startDate.toString().split(" ")[2].replaceAll(".", "");
@@ -54,6 +65,13 @@ class _TimerScreenState extends State<TimerScreen> {
 
   void onPausePressed() {
     timer.cancel();
+    Fluttertoast.showToast(
+      msg: "타이머 일시중지",
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: const Color(0xAA000000),
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
     setState(() {
       isRuning = false;
     });
@@ -61,6 +79,13 @@ class _TimerScreenState extends State<TimerScreen> {
 
   void onResetPressed() {
     timer.cancel();
+    Fluttertoast.showToast(
+      msg: "타이머 초기화",
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: const Color(0xAA000000),
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
     setState(() {
       isRuning = false;
       totalSeconds = plusTime;
@@ -138,7 +163,7 @@ class _TimerScreenState extends State<TimerScreen> {
 
                     Text(
                       (totalSeconds != 0)
-                          ? '$startDate'
+                          ? startDate
                           : '0000. 00. 00. 00:00:00',
                       style: TextStyle(
                         fontSize: 35,
@@ -190,15 +215,26 @@ class _TimerScreenState extends State<TimerScreen> {
                 // 기억 저장 버튼
                 GestureDetector(
                   onTap: () {
-                    // showMemoryWrite(context, 'dd', 'dd');
-                    showMemoryInputDialog(
-                      context,
-                      saveDate: isRuning ? startDate : '20xx. xx. xx. 00:00:00',
-                      saveTime: format(totalSeconds),
-                      // onSave: (date, content) {
-                      //   // 저장 로직
-                      // },
-                    );
+                    isRuning
+                        ? showMemoryInputDialog(
+                            context,
+                            saveDate: isRuning
+                                ? giveDate
+                                : '20xx년 xx월 xx일 00시 00분 00초',
+                            saveTime: format(totalSeconds),
+                            // onSave: (date, content) {
+                            //   // 저장 로직
+                            // },
+                          )
+                        : Fluttertoast.showToast(
+                            msg: "타이머 기억을 시작해주세요. ",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(0xAA000000),
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                    onPausePressed();
                   },
                   child: Container(
                     width: 244,

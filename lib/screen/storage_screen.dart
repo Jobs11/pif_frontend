@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
+import 'package:pif_frontend/model/currentuser.dart';
+import 'package:pif_frontend/model/record.dart';
+import 'package:pif_frontend/service/recordservice.dart';
 import 'package:pif_frontend/utils/month.dart';
 
 class StorageScreen extends StatefulWidget {
@@ -18,6 +21,9 @@ class _StorageScreenState extends State<StorageScreen> {
   late int yesDay1 = 0, yesDay2 = 0, yesDay3 = 0;
   late int tomDay1 = 0, tomDay2 = 0, tomDay3 = 0;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  late String date;
+
+  late Future<List<Records>> records;
 
   @override
   void initState() {
@@ -34,6 +40,20 @@ class _StorageScreenState extends State<StorageScreen> {
     tomDay1 = dates['next']![0]['day']!;
     tomDay2 = dates['next']![1]['day']!;
     tomDay3 = dates['next']![2]['day']!;
+
+    (todayMonth < 10)
+        ? (todayDay < 10)
+              ? date = '$todayYear년 0$todayMonth월 0$todayDay'
+              : date = '$todayYear년 0$todayMonth월 $todayDay'
+        : (todayDay < 10)
+        ? date = '$todayYear년 $todayMonth월 0$todayDay'
+        : date = '$todayYear년 $todayMonth월 $todayDay';
+
+    records = Recordservice.getRecordList(
+      CurrentUser.instance.member!.mId,
+      date,
+    );
+    print(date);
   }
 
   // 목록 데이터 바뀌는 거 수정해야함
@@ -55,6 +75,19 @@ class _StorageScreenState extends State<StorageScreen> {
       tomDay1 = subDates['next']![0]['day']!;
       tomDay2 = subDates['next']![1]['day']!;
       tomDay3 = subDates['next']![2]['day']!;
+
+      (todayMonth < 10)
+          ? (todayDay < 10)
+                ? date = '$todayYear년 0$todayMonth월 0$todayDay'
+                : date = '$todayYear년 0$todayMonth월 $todayDay'
+          : (todayDay < 10)
+          ? date = '$todayYear년 $todayMonth월 0$todayDay'
+          : date = '$todayYear년 $todayMonth월 $todayDay';
+
+      records = Recordservice.getRecordList(
+        CurrentUser.instance.member!.mId,
+        date,
+      );
     });
   }
 
@@ -76,6 +109,19 @@ class _StorageScreenState extends State<StorageScreen> {
       tomDay1 = addDates['next']![0]['day']!;
       tomDay2 = addDates['next']![1]['day']!;
       tomDay3 = addDates['next']![2]['day']!;
+
+      (todayMonth < 10)
+          ? (todayDay < 10)
+                ? date = '$todayYear년 0$todayMonth월 0$todayDay'
+                : date = '$todayYear년 0$todayMonth월 $todayDay'
+          : (todayDay < 10)
+          ? date = '$todayYear년 $todayMonth월 0$todayDay'
+          : date = '$todayYear년 $todayMonth월 $todayDay';
+
+      records = Recordservice.getRecordList(
+        CurrentUser.instance.member!.mId,
+        date,
+      );
     });
   }
 
@@ -199,20 +245,49 @@ class _StorageScreenState extends State<StorageScreen> {
                     padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                     child: SizedBox(
                       height: 580,
-                      child: ListView.separated(
-                        // 불러온 데이터의 리스트 길이
-                        itemCount: 20,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Container(
+                      child: FutureBuilder<List<Records>>(
+                        future: records, // ← 서버 호출 Future
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text('불러오기 실패: ${snapshot.error}'),
+                            );
+                          }
+
+                          final items = snapshot.data ?? const <Records>[];
+                          if (items.isEmpty) {
+                            return const Center(child: Text('기록이 없습니다.'));
+                          }
+
+                          return ListView.separated(
+                            itemCount: items.length,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 13),
+                            itemBuilder: (context, index) {
+                              final r = items[index];
+
+                              // 모델 필드명에 맞게 수정하세요.
+                              // 예시: r.rDate, r.rTime, r.rDecoration
+                              final displayDate = r.rDate;
+                              final displayTimer = r.rTime;
+                              final memo = (r.rDecoration.isEmpty)
+                                  ? '(메모 없음)'
+                                  : r.rDecoration;
+
+                              return Container(
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFCCFAF8),
+                                  color: const Color(0xFFCCFAF8),
                                   borderRadius: BorderRadius.circular(30),
                                   border: Border.all(color: Colors.black),
                                 ),
                                 width: double.infinity,
-                                height: 97,
+                                height: 117,
                                 child: Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                     15,
@@ -227,20 +302,22 @@ class _StorageScreenState extends State<StorageScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           // 작성 년도 월 일
-                                          inputYT('20XX. XX. XX'),
-
+                                          inputYT(
+                                            displayDate.replaceAll('일 ', '일\n'),
+                                            12,
+                                          ),
                                           // 기록된 타이머
-                                          inputYT('  00:00:00'),
+                                          inputYT(displayTimer, 15),
                                         ],
                                       ),
-                                      SizedBox(height: 8),
+                                      const SizedBox(height: 8),
                                       Container(
                                         alignment: Alignment.centerLeft,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
                                             30,
                                           ),
-                                          color: Color(0Xffffffff),
+                                          color: const Color(0XFFFFFFFF),
                                           border: Border.all(
                                             color: Colors.black,
                                           ),
@@ -248,19 +325,17 @@ class _StorageScreenState extends State<StorageScreen> {
                                         width: double.infinity,
                                         height: 54,
                                         child: Text(
-                                          '  00:00:00',
-                                          style: TextStyle(fontSize: 15),
+                                          '  $memo',
+                                          style: const TextStyle(fontSize: 15),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                            ],
+                              );
+                            },
                           );
                         },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 13),
                       ),
                     ),
                   ),
@@ -295,7 +370,7 @@ class _StorageScreenState extends State<StorageScreen> {
     );
   }
 
-  Container inputYT(String title) {
+  Container inputYT(String title, double size) {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -304,8 +379,11 @@ class _StorageScreenState extends State<StorageScreen> {
         border: Border.all(color: Colors.black),
       ),
       width: 140,
-      height: 20,
-      child: Text(title, style: TextStyle(fontSize: 15)),
+      height: 40,
+      child: Text(
+        title,
+        style: TextStyle(fontSize: size, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
