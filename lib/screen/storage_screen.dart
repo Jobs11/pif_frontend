@@ -53,7 +53,6 @@ class _StorageScreenState extends State<StorageScreen> {
       CurrentUser.instance.member!.mId,
       date,
     );
-    print(date);
   }
 
   // 목록 데이터 바뀌는 거 수정해야함

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pif_frontend/model/post.dart';
+import 'package:pif_frontend/model/record.dart';
 
 class Hascomment extends StatefulWidget {
-  const Hascomment({super.key});
+  final Post p;
+  final Records r;
+
+  const Hascomment({super.key, required this.p, required this.r});
 
   @override
   State<Hascomment> createState() => _HascommentState();

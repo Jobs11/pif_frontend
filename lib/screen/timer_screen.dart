@@ -216,7 +216,7 @@ class _TimerScreenState extends State<TimerScreen> {
                 GestureDetector(
                   onTap: () {
                     isRuning
-                        ? showMemoryInputDialog(
+                        ? showWriterMemory(
                             context,
                             saveDate: isRuning
                                 ? giveDate

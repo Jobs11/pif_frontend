@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pif_frontend/model/post.dart';
+import 'package:pif_frontend/model/record.dart';
 
 class Uncomment extends StatelessWidget {
-  const Uncomment({super.key});
+  final Post p;
+  final Records r;
+
+  const Uncomment({super.key, required this.p, required this.r});
 
   @override
   Widget build(BuildContext context) {

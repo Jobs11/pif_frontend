@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/model/currentuser.dart';
-import 'package:pif_frontend/screen/timer_screen.dart';
+
 import 'package:pif_frontend/service/recordservice.dart';
 import 'package:pif_frontend/model/record.dart';
 
-Future<void> showMemoryInputDialog(
+Future<void> showWriterMemory(
   BuildContext context, {
   required String saveDate, // 예: "00시간 00분 00초"
   required String saveTime,
@@ -308,7 +308,7 @@ Future<void> _registerFromDialog(
     await Recordservice.registerR(record);
 
     // 다이얼로그 닫기
-    Navigator.pop(dialogContext, true); // true = 가입 성공
+    Navigator.pop(dialogContext); // true = 가입 성공
 
     Fluttertoast.showToast(
       msg: "작성 완료!",
@@ -324,7 +324,7 @@ Future<void> _registerFromDialog(
     //   MaterialPageRoute(builder: (_) => TimerScreen()),
     // );
   } catch (e) {
-    Navigator.pop(dialogContext, false); // false = 가입 실패
+    Navigator.pop(dialogContext); // false = 가입 실패
 
     Fluttertoast.showToast(
       msg: "작성 실패! $e",
