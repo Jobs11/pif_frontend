@@ -44,7 +44,7 @@ class Member {
     'm_password': mPassword,
   };
 
-  Map<String, dynamic> toJsonPaintOnly() => {'m_paint': mPaint};
+  Map<String, dynamic> toJsonPaintOnly() => {'m_id': mId, 'm_paint': mPaint};
 
   Map<String, dynamic> toJsonUpdate() => {
     // Dart → JSON 매핑

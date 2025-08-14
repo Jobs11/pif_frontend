@@ -59,7 +59,7 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
           children: [
             // 헤더 타이틀
             Text(
-              '하루의 흔적 작성',
+              '작성한 기억 목록',
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w800,

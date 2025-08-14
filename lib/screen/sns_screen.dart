@@ -26,6 +26,18 @@ class _SnsScreenState extends State<SnsScreen> {
 
   final Map<int, Future<Records>> _recordFutureCache = {};
 
+  final Set<int> _openPostIds = <int>{};
+
+  void _toggleComments(Post post) {
+    setState(() {
+      if (_openPostIds.contains(post.pNum)) {
+        _openPostIds.remove(post.pNum);
+      } else {
+        _openPostIds.add(post.pNum!);
+      }
+    });
+  }
+
   Future<Records> _getRecordOnce(int rnum) {
     return _recordFutureCache.putIfAbsent(
       rnum,
@@ -46,7 +58,7 @@ class _SnsScreenState extends State<SnsScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(43),
         child: PifAppbar(
-          titlename: '하루의 흔적',
+          titlename: '기억 속 이야기',
           isMenu: true,
           isBack: false,
           isColored: Color(0xFFA0E4E7),
@@ -190,6 +202,8 @@ class _SnsScreenState extends State<SnsScreen> {
                             final p = items[index];
                             final rnum = p.rNum; // ← p에서 rnum 추출 (필드명에 맞게 수정)
 
+                            final isOpen = _openPostIds.contains(p.pNum);
+
                             return FutureBuilder<Records>(
                               future: _getRecordOnce(rnum),
                               builder: (context, rSnap) {
@@ -221,9 +235,17 @@ class _SnsScreenState extends State<SnsScreen> {
 
                                 // 여기서 p(요약/목록 데이터) + r(상세 데이터)로 원하는 위젯을 조립
                                 // Hascomment/Uncomment가 p,r을 필요로 한다면 생성자에 맞춰 전달하세요.
-                                return isComment
-                                    ? Hascomment(p: p, r: r) // 예시: 커스텀 위젯에 주입
-                                    : Uncomment(p: p, r: r); // 예시: 커스텀 위젯에 주입
+                                return isOpen
+                                    ? Hascomment(
+                                        p: p,
+                                        r: r,
+                                        onToggle: () => _toggleComments(p),
+                                      ) // 예시: 커스텀 위젯에 주입
+                                    : Uncomment(
+                                        p: p,
+                                        r: r,
+                                        onToggle: () => _toggleComments(p),
+                                      ); // 예시: 커스텀 위젯에 주입
                               },
                             );
                           },

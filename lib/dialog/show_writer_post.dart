@@ -101,7 +101,7 @@ class _DailyTraceDialogState extends State<_PostWriterDialog> {
           children: [
             // 헤더 타이틀
             Text(
-              '하루의 흔적 작성',
+              '기억 속 이야기 작성',
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w800,

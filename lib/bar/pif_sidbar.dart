@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pif_frontend/model/currentuser.dart';
+import 'package:pif_frontend/screen/profile_screen.dart';
 import 'package:pif_frontend/screen/sns_screen.dart';
 import 'package:pif_frontend/screen/storage_screen.dart';
 import 'package:pif_frontend/screen/timer_screen.dart';
@@ -95,7 +96,7 @@ class PifSidbar extends StatelessWidget {
                     height: 20,
                   ),
                   title: Text(
-                    '하루의 흔적',
+                    '기억 속 이야기',
                     style: TextStyle(
                       color: Color(0xFF146467),
                       fontSize: 15,
@@ -117,7 +118,7 @@ class PifSidbar extends StatelessWidget {
                     height: 20,
                   ),
                   title: Text(
-                    '프로필 화면',
+                    '기억의 주인',
                     style: TextStyle(
                       color: Color(0xFF146467),
                       fontSize: 15,
@@ -125,7 +126,10 @@ class PifSidbar extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                    );
                     // 설정 화면 이동
                   },
                 ),
