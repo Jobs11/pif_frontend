@@ -493,7 +493,22 @@ class _MemberScreenState extends State<MemberScreen> {
                   ),
                   SizedBox(height: 30),
                   GestureDetector(
-                    onTap: _register,
+                    onTap: () {
+                      (passwordController.text == conpasswordController.text)
+                          ? _register()
+                          : Fluttertoast.showToast(
+                              msg: "비밀번호가 서로 다릅니다.",
+                              toastLength:
+                                  Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+                              gravity: ToastGravity
+                                  .BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+                              backgroundColor: const Color(
+                                0xAA000000,
+                              ), // 반투명 검정
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                    },
                     child: Container(
                       width: 304,
                       height: 50,

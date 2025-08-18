@@ -53,5 +53,6 @@ class Member {
     'm_phone': mPhone,
     'm_email': mEmail,
     'm_password': mPassword,
+    'm_id': mId,
   };
 }

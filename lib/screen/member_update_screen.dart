@@ -52,16 +52,16 @@ class _MemberUpdateScreenState extends State<MemberUpdateScreen> {
 
     emailController.text = email1!;
 
-    List<String> parts = CurrentUser.instance.member!.mBirth.split('-');
-    if (parts.length == 3) {
-      String year = parts[0].padLeft(4, '0');
-      String month = parts[1].padLeft(2, '0');
-      String day = parts[2].padLeft(2, '0');
+    // List<String> parts = CurrentUser.instance.member!.mBirth.split('-');
+    // if (parts.length == 3) {
+    //   String year = parts[0].padLeft(4, '0');
+    //   String month = parts[1].padLeft(2, '0');
+    //   String day = parts[2].padLeft(2, '0');
 
-      birtdata = "$year-$month-$day"; // 2025-08-29
-    }
+    //   birtdata = "$year-$month-$day"; // 2025-08-29
+    // }
 
-    selectedDate = DateTime.parse(birtdata);
+    //selectedDate = DateTime.parse(birtdata);
   }
 
   bool _loading = false;
@@ -73,22 +73,24 @@ class _MemberUpdateScreenState extends State<MemberUpdateScreen> {
     final member = Member(
       mName: nameController.text.trim(),
       mNickname: nicknameController.text.trim(),
-      mBirth: birtdata.toString(),
+      mBirth: m!.mBirth,
       mPhone:
           '${phoneSController.text.trim()}-${phoneMController.text.trim()}-${phoneEController.text.trim()}',
       mEmail: '${emailController.text.trim()}@$selectedValue',
       mId: m!.mId,
       mPassword: passwordController.text.trim(),
+      mPaint: m!.mPaint,
     );
 
     try {
-      await Memberservice.updateMember(member); // 서버는 200/201만 주면 OK
+      await Memberservice.updateMember(member);
+      // 서버는 200/201만 주면 OK
 
       CurrentUser.instance.member = member;
 
       if (!mounted) return;
       Fluttertoast.showToast(
-        msg: "프로필 사진 변경 완료!",
+        msg: "프로필 정보 변경 완료!",
         toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
@@ -101,7 +103,7 @@ class _MemberUpdateScreenState extends State<MemberUpdateScreen> {
     } catch (e) {
       if (!mounted) return;
       Fluttertoast.showToast(
-        msg: "프로필 사진 변경 실패! $e",
+        msg: "프로필 정보 변경 실패! $e",
         toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
@@ -113,22 +115,22 @@ class _MemberUpdateScreenState extends State<MemberUpdateScreen> {
     }
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate ?? DateTime.now(), // 초기 날짜
-      firstDate: DateTime(2000), // 선택 가능 최소 날짜
-      lastDate: DateTime(2100), // 선택 가능 최대 날짜
-      locale: const Locale('ko', 'KR'), // 한국어 설정
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-        birtdata =
-            '${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}';
-      });
-    }
-  }
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: selectedDate ?? DateTime.now(), // 초기 날짜
+  //     firstDate: DateTime(2000), // 선택 가능 최소 날짜
+  //     lastDate: DateTime(2100), // 선택 가능 최대 날짜
+  //     locale: const Locale('ko', 'KR'), // 한국어 설정
+  //   );
+  //   if (picked != null && picked != selectedDate) {
+  //     setState(() {
+  //       selectedDate = picked;
+  //       birtdata =
+  //           '${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}';
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -182,71 +184,7 @@ class _MemberUpdateScreenState extends State<MemberUpdateScreen> {
                   ),
                   SizedBox(height: 6),
                   // 생년월일
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            '생년월일',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF026565),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 6),
-
-                      Container(
-                        width: 330,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0x80FFFFFF),
-                          border: Border.all(color: Colors.black, width: 2),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 5,
-                          ),
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  selectedDate == null
-                                      ? '0000-00-00'
-                                      : '${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    _selectDate(context);
-                                  },
-                                  child: Image.asset(
-                                    'assets/images/addicon/calender.png',
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
+                  membershipData('생년월일', m!.mBirth),
                   SizedBox(height: 6),
                   // 휴대폰 번호
                   Column(
@@ -524,7 +462,7 @@ class _MemberUpdateScreenState extends State<MemberUpdateScreen> {
                       (passwordController.text == conpasswordController.text)
                           ? _update()
                           : Fluttertoast.showToast(
-                              msg: "재작성",
+                              msg: "비밀번호가 서로 다릅니다.",
                               toastLength:
                                   Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
                               gravity: ToastGravity

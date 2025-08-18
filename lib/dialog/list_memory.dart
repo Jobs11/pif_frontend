@@ -162,7 +162,7 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
                                               140,
                                             ),
                                             // 기록된 타이머
-                                            inputLM(displayTimer, 15, 70),
+                                            inputLM(displayTimer, 10, 80),
                                           ],
                                         ),
                                         const SizedBox(height: 8),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/model/comment.dart';
+import 'package:pif_frontend/model/commentheart.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/member.dart';
+import 'package:pif_frontend/service/commentheartservice.dart';
 import 'package:pif_frontend/service/memberservice.dart';
 import 'package:pif_frontend/utils/functions.dart';
 
@@ -16,11 +19,107 @@ class Commentlist extends StatefulWidget {
 
 class _CommentlistState extends State<Commentlist> {
   late Future<Member> member;
+  late Future<int> countCH;
+  late Future<int> countAllCH;
+
+  bool _loading = false;
 
   @override
   void initState() {
     super.initState();
     member = Memberservice.userdata(widget.c.cId);
+    countCH = Commentheartservice.countHeart(
+      CurrentUser.instance.member!.mId,
+      widget.c.cNum!,
+    );
+
+    countAllCH = Commentheartservice.countAllHeart(widget.c.cNum!);
+  }
+
+  Future<void> _toggleHeart(int cNum, int ch) async {
+    if (ch != 0) {
+      await _delete(cNum);
+    } else {
+      await _register(cNum);
+    }
+    // Future 다시 실행 → UI 새로 그림
+    setState(() {
+      countCH = Commentheartservice.countHeart(
+        CurrentUser.instance.member!.mId,
+        widget.c.cNum!,
+      );
+      countAllCH = Commentheartservice.countAllHeart(widget.c.cNum!);
+    });
+  }
+
+  Future<void> _register(int cNum) async {
+    setState(() => _loading = true);
+
+    final commentheart = Commentheart(
+      chId: CurrentUser.instance.member!.mId,
+      chNum: cNum,
+    );
+
+    try {
+      await Commentheartservice.registerH(commentheart); // 서버는 200/201만 주면 OK
+
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "댓글 좋아요!",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "에러 $e",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  Future<void> _delete(int cNum) async {
+    setState(() => _loading = true);
+
+    final commentheart = Commentheart(
+      chId: CurrentUser.instance.member!.mId,
+      chNum: cNum,
+    );
+
+    try {
+      await Commentheartservice.deleteH(commentheart); // 서버는 200/201만 주면 OK
+
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "댓글 좋아요 취소!",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "에러 $e",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
   }
 
   @override
@@ -78,16 +177,69 @@ class _CommentlistState extends State<Commentlist> {
                                 ),
                               ),
                               SizedBox(width: 3),
-                              Image.asset(
-                                'assets/images/addicon/f_heart.png',
-                                width: 7,
-                                height: 7,
+                              FutureBuilder<int>(
+                                future: countCH,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  if (snapshot.hasError) {
+                                    return Center(
+                                      child: Text('오류 발생: ${snapshot.error}'),
+                                    );
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return const Center(child: Text('데이터 없음'));
+                                  }
+
+                                  final h = snapshot.data!;
+
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        _toggleHeart(widget.c.cNum!, h),
+                                    child: Image.asset(
+                                      (h != 0)
+                                          ? 'assets/images/addicon/f_heart.png'
+                                          : 'assets/images/addicon/e_heart.png',
+                                      width: 7,
+                                      height: 7,
+                                    ),
+                                  );
+                                },
                               ),
                               SizedBox(width: 5.5),
-                              SizedBox(
-                                width: 22,
-                                height: 10,
-                                child: Text('1', style: TextStyle(fontSize: 8)),
+                              FutureBuilder<int>(
+                                future: countAllCH,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  if (snapshot.hasError) {
+                                    return Center(
+                                      child: Text('오류 발생: ${snapshot.error}'),
+                                    );
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return const Center(child: Text('데이터 없음'));
+                                  }
+
+                                  final h = snapshot.data!;
+
+                                  return SizedBox(
+                                    width: 22,
+                                    height: 10,
+                                    child: Text(
+                                      h.toString(),
+                                      style: TextStyle(fontSize: 8),
+                                    ),
+                                  );
+                                },
                               ),
                               SizedBox(width: 3),
                               SizedBox(

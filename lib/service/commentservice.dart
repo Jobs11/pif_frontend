@@ -8,6 +8,7 @@ class Commentservice {
   static const String registerComment = "register";
   static const String getList = "getlist";
   static const String getCount = "getcount";
+  static const String getMyCount = "getMyCount";
   static const String modifyUser = "modify";
   static const String deleteUser = "delete";
 
@@ -49,6 +50,22 @@ class Commentservice {
     final url = Uri.parse(
       "$baseUrl/$getCount",
     ).replace(queryParameters: {'c_getnum': cgetnum.toString()});
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return json.toInt();
+    }
+
+    throw Exception('로그인 실패: ${response.statusCode}');
+  }
+
+  static Future<int> countMyComment(String cId) async {
+    // GET 요청 → URL에 파라미터로 전달
+    final url = Uri.parse(
+      "$baseUrl/$getMyCount",
+    ).replace(queryParameters: {'c_id': cId});
 
     final response = await http.get(url);
 

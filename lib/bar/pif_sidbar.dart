@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/screen/profile_screen.dart';
+import 'package:pif_frontend/screen/setting_screen.dart';
 import 'package:pif_frontend/screen/sns_screen.dart';
 import 'package:pif_frontend/screen/storage_screen.dart';
 import 'package:pif_frontend/screen/timer_screen.dart';
@@ -25,21 +26,52 @@ class PifSidbar extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 DrawerHeader(
-                  child: Column(
+                  child: Stack(
                     children: [
-                      Image.asset(
-                        CurrentUser.instance.member?.mPaint ??
-                            'assets/images/addicon/user.png',
-                        fit: BoxFit.cover,
-                        width: 90,
-                        height: 90,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              CurrentUser.instance.member?.mPaint ??
+                                  'assets/images/addicon/user.png',
+                              fit: BoxFit.cover,
+                              width: 90,
+                              height: 90,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              CurrentUser.instance.member?.mNickname ?? "손님",
+                              style: const TextStyle(
+                                color: Color(0xFF146467),
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        CurrentUser.instance.member?.mNickname ?? "손님",
-                        style: TextStyle(
-                          color: Color(0xFF146467),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+
+                      // 오른쪽 상단에 들어갈 아이콘
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            // 눌렀을 때 동작
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SettingScreen(),
+                              ),
+                            );
+                          },
+                          child: Image.asset(
+                            'assets/images/addicon/setting.png', // 넣고 싶은 이미지 경로
+                            width: 30,
+                            height: 30,
+                          ),
                         ),
                       ),
                     ],

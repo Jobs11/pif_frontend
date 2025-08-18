@@ -9,6 +9,7 @@ class Postservice {
   static const String getPost = "getlist";
   static const String modifyPost = "modify";
   static const String deletePost = "delete";
+  static const String getMyCount = "getMyCount";
 
   static Future<void> registerP(Post post) async {
     final url = Uri.parse("$baseUrl/$registerPost");
@@ -41,5 +42,21 @@ class Postservice {
       return postInstances;
     }
     throw Error();
+  }
+
+  static Future<int> countPost(String pId) async {
+    // GET 요청 → URL에 파라미터로 전달
+    final url = Uri.parse(
+      "$baseUrl/$getMyCount",
+    ).replace(queryParameters: {'p_id': pId});
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return json.toInt();
+    }
+
+    throw Exception('로그인 실패: ${response.statusCode}');
   }
 }
