@@ -10,6 +10,8 @@ class Postservice {
   static const String modifyPost = "modify";
   static const String deletePost = "delete";
   static const String getMyCount = "getMyCount";
+  static const String getPostTop = "getPostTop";
+  static const String getMyPost = "getMyPost";
 
   static Future<void> registerP(Post post) async {
     final url = Uri.parse("$baseUrl/$registerPost");
@@ -58,5 +60,50 @@ class Postservice {
     }
 
     throw Exception('로그인 실패: ${response.statusCode}');
+  }
+
+  static Future<List<Post>> getTopPosts() async {
+    List<Post> postInstances = [];
+    final url = Uri.parse('$baseUrl/$getPostTop');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> posts = jsonDecode(response.body);
+      for (var post in posts) {
+        postInstances.add(Post.fromJson(post));
+      }
+      return postInstances;
+    }
+    throw Error();
+  }
+
+  static Future<List<Post>> getMyPostList(String pId) async {
+    List<Post> postInstances = [];
+    final url = Uri.parse(
+      '$baseUrl/$getMyPost',
+    ).replace(queryParameters: {'p_id': pId});
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> posts = jsonDecode(response.body);
+      for (var post in posts) {
+        postInstances.add(Post.fromJson(post));
+      }
+      return postInstances;
+    }
+    throw Error();
+  }
+
+  static Future<void> deleteP(int pNum) async {
+    final url = Uri.parse("$baseUrl/$deletePost");
+
+    final res = await http.post(
+      url,
+      body: {'p_num': pNum.toString()}, // 요청 파라미터
+    );
+
+    if (res.statusCode != 201 && res.statusCode != 200) {
+      throw Exception("Register failed: ${res.statusCode} ${res.body}");
+    }
   }
 }

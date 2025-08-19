@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
+import 'package:pif_frontend/screen/setting/alamsetting.dart';
+import 'package:pif_frontend/screen/setting/infosetting.dart';
+import 'package:pif_frontend/screen/setting/languagesetting.dart';
+import 'package:pif_frontend/screen/setting/themesetting.dart';
+import 'package:pif_frontend/screen/setting/usersetting.dart';
+import 'package:pif_frontend/utils/functions.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -107,9 +113,19 @@ class SettingScreen extends StatelessWidget {
                           SizedBox(height: 5),
                           settingrow('버전 정보 & 업데이트 확인'),
                           SizedBox(height: 5),
-                          settingrow('이용약관'),
+                          GestureDetector(
+                            onTap: () {
+                              openScreen(context, (context) => Usersetting());
+                            },
+                            child: settingrow('이용약관'),
+                          ),
                           SizedBox(height: 5),
-                          settingrow('개인정보 처리방침'),
+                          GestureDetector(
+                            onTap: () {
+                              openScreen(context, (context) => Infosetting());
+                            },
+                            child: settingrow('개인정보 처리방침'),
+                          ),
                           SizedBox(height: 5),
                         ],
                       ),
@@ -139,11 +155,29 @@ class SettingScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10),
-                          settingrow('테마 설정'),
+                          GestureDetector(
+                            onTap: () {
+                              openScreen(context, (context) => Themesetting());
+                            },
+                            child: settingrow('테마 설정'),
+                          ),
                           SizedBox(height: 5),
-                          settingrow('알림 설정'),
+                          GestureDetector(
+                            onTap: () {
+                              openScreen(context, (context) => Alamsetting());
+                            },
+                            child: settingrow('알림 설정'),
+                          ),
                           SizedBox(height: 5),
-                          settingrow('언어 설정'),
+                          GestureDetector(
+                            onTap: () {
+                              openScreen(
+                                context,
+                                (context) => Languagesetting(),
+                              );
+                            },
+                            child: settingrow('언어 설정'),
+                          ),
                           SizedBox(height: 5),
                           settingrow('실험실'),
                           SizedBox(height: 5),

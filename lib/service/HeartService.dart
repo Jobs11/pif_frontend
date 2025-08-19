@@ -9,6 +9,7 @@ class Heartservice {
   static const String getHeart = "getHeart";
   static const String getCount = "getCount";
   static const String getMyCount = "getMyCount";
+  static const String getTopCount = "getTopCount";
   static const String deleteHeart = "delete";
 
   static Future<void> registerH(Heart heart) async {
@@ -90,4 +91,14 @@ class Heartservice {
 
     throw Exception('로그인 실패: ${response.statusCode}');
   }
+
+  // static Future<List<int>> getTopHeartPosts() async {
+  //   final response = await http.get(Uri.parse("$baseUrl/$getTopCount"));
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> data = jsonDecode(response.body);
+  //     return data.map((e) => e as int).toList();
+  //   } else {
+  //     throw Exception("Failed to load top hearts");
+  //   }
+  // }
 }

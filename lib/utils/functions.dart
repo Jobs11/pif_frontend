@@ -27,11 +27,17 @@ String hoursAgoFromMysql(String mysqlDate) {
     // 결과 반환
     if (diff.inMinutes < 60) {
       return "${diff.inMinutes}분 전";
-    } else {
+    } else if (diff.inHours < 24) {
       return "${diff.inHours}시간 전";
+    } else {
+      return "${diff.inDays}일 전";
     }
   } catch (e) {
     // 파싱 실패 시
     return "날짜 형식 오류";
   }
+}
+
+void openScreen(BuildContext context, WidgetBuilder builder) {
+  Navigator.push(context, MaterialPageRoute(builder: builder));
 }

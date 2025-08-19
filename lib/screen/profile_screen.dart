@@ -6,7 +6,8 @@ import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/screen/login_screens.dart';
 
 import 'package:pif_frontend/screen/member_update_screen.dart';
-import 'package:pif_frontend/service/HeartService.dart';
+import 'package:pif_frontend/service/heartservice.dart';
+import 'package:pif_frontend/service/commentheartservice.dart';
 import 'package:pif_frontend/service/commentservice.dart';
 import 'package:pif_frontend/service/postservice.dart';
 
@@ -31,6 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     countP = Postservice.countPost(CurrentUser.instance.member!.mId);
     countPH = Heartservice.countMyHeart(CurrentUser.instance.member!.mId);
     countC = Commentservice.countMyComment(CurrentUser.instance.member!.mId);
+    countCH = Commentheartservice.countMyHeart(
+      CurrentUser.instance.member!.mId,
+    );
   }
 
   @override
@@ -166,32 +170,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: 15),
 
                     // 좋아요 한 댓글 수
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.black),
-                        color: Color.fromARGB(255, 233, 255, 254),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/addicon/f_heart.png',
-                              width: 30,
-                              height: 30,
-                            ),
-                            SizedBox(width: 20),
-                            Text(
-                              '댓글 좋아요 수: ',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    countingData(
+                      countCH,
+                      'assets/images/addicon/f_heart.png',
+                      '좋아요 한 댓글 수:',
                     ),
                     SizedBox(height: 15),
                     Container(

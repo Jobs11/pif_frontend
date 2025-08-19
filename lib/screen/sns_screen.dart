@@ -3,8 +3,10 @@ import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 
 import 'package:pif_frontend/dialog/show_writer_post.dart';
+import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/post.dart';
 import 'package:pif_frontend/model/record.dart';
+import 'package:pif_frontend/service/heartservice.dart';
 import 'package:pif_frontend/service/postservice.dart';
 import 'package:pif_frontend/service/recordservice.dart';
 import 'package:pif_frontend/utils/hascomment.dart';
@@ -28,6 +30,30 @@ class _SnsScreenState extends State<SnsScreen> {
 
   final Set<int> _openPostIds = <int>{};
 
+  @override
+  void initState() {
+    super.initState();
+    posts = Postservice.getPostList("공개");
+  }
+
+  void _loadTopPosts() async {
+    setState(() {
+      posts = Postservice.getTopPosts();
+    });
+  }
+
+  void _loadMyList() async {
+    setState(() {
+      posts = Postservice.getMyPostList(CurrentUser.instance.member!.mId);
+    });
+  }
+
+  void _loadRefreshList() {
+    setState(() {
+      posts = Postservice.getPostList("공개");
+    });
+  }
+
   void _toggleComments(Post post) {
     setState(() {
       if (_openPostIds.contains(post.pNum)) {
@@ -43,18 +69,6 @@ class _SnsScreenState extends State<SnsScreen> {
       rnum,
       () => Recordservice.recordGet(rnum), // int rnum 그대로
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    posts = Postservice.getPostList("공개");
-  }
-
-  void refreshlist() {
-    setState(() {
-      posts = Postservice.getPostList("공개");
-    });
   }
 
   @override
@@ -142,12 +156,22 @@ class _SnsScreenState extends State<SnsScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          refreshlist();
+                          _loadRefreshList();
                         },
                         child: searchbt('새로고침'),
                       ),
-                      searchbt('좋아요'),
-                      searchbt('자기 목록'),
+                      GestureDetector(
+                        onTap: () {
+                          _loadTopPosts();
+                        },
+                        child: searchbt('좋아요'),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _loadMyList();
+                        },
+                        child: searchbt('자기 목록'),
+                      ),
                     ],
                   ),
                   SizedBox(height: 8),
@@ -172,12 +196,23 @@ class _SnsScreenState extends State<SnsScreen> {
                         ),
                         width: double.infinity,
                         height: 24,
-                        child: Text(
-                          '오늘의 하루는 어떠셨나요?',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '오늘의 하루는 어떠셨나요?',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Image.asset(
+                              'assets/images/addicon/click.png',
+                              height: 20,
+                              width: 20,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -253,11 +288,17 @@ class _SnsScreenState extends State<SnsScreen> {
                         p: p,
                         r: r,
                         onToggle: () => _toggleComments(p),
+                        onRefresh: () {
+                          _loadRefreshList();
+                        },
                       ) // 예시: 커스텀 위젯에 주입
                     : Uncomment(
                         p: p,
                         r: r,
                         onToggle: () => _toggleComments(p),
+                        onRefresh: () {
+                          _loadRefreshList();
+                        },
                       ); // 예시: 커스텀 위젯에 주입
               },
             );

@@ -21,17 +21,20 @@ class PifAppbar extends StatelessWidget {
       backgroundColor: isColored,
       centerTitle: true,
       automaticallyImplyLeading: isBack,
-      leading: Visibility(
-        visible: isMenu,
-        child: IconButton(
-          icon: Image.asset(
-            'assets/images/addicon/menu.png',
-            width: 21,
-            height: 21,
-          ),
-          onPressed: onMenuPressed,
-        ),
-      ),
+
+      leading: (isBack == false)
+          ? Visibility(
+              visible: isMenu,
+              child: IconButton(
+                icon: Image.asset(
+                  'assets/images/addicon/menu.png',
+                  width: 21,
+                  height: 21,
+                ),
+                onPressed: onMenuPressed,
+              ),
+            )
+          : null,
 
       title: Text(
         titlename,

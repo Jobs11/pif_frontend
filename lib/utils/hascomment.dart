@@ -8,9 +8,10 @@ import 'package:pif_frontend/model/member.dart';
 import 'package:pif_frontend/model/post.dart';
 import 'package:pif_frontend/model/record.dart';
 import 'package:pif_frontend/screen/sns_screen.dart';
-import 'package:pif_frontend/service/HeartService.dart';
+import 'package:pif_frontend/service/heartservice.dart';
 import 'package:pif_frontend/service/commentservice.dart';
 import 'package:pif_frontend/service/memberservice.dart';
+import 'package:pif_frontend/service/postservice.dart';
 import 'package:pif_frontend/utils/commentlist.dart';
 import 'package:pif_frontend/utils/functions.dart';
 
@@ -18,12 +19,14 @@ class Hascomment extends StatefulWidget {
   final Post p;
   final Records r;
   final VoidCallback onToggle;
+  final VoidCallback onRefresh;
 
   const Hascomment({
     super.key,
     required this.p,
     required this.r,
     required this.onToggle,
+    required this.onRefresh,
   });
 
   @override
@@ -168,6 +171,36 @@ class _HascommentState extends State<Hascomment> {
       if (!mounted) return;
       Fluttertoast.showToast(
         msg: "게시글 좋아요 취소!",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "에러 $e",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  Future<void> _deleteP(int pNum) async {
+    setState(() => _loading = true);
+
+    try {
+      await Postservice.deleteP(pNum); // 서버는 200/201만 주면 OK
+
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "게시글 삭제!",
         toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
@@ -413,19 +446,25 @@ class _HascommentState extends State<Hascomment> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Container(
-                            alignment: Alignment.topCenter,
-                            width: 55,
-                            height: 15,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Color(0xFFFFC8C8),
-                              border: Border.all(color: Colors.black),
-                            ),
-                            child: Text(
-                              '삭제',
-                              style: TextStyle(fontSize: 10),
-                              textAlign: TextAlign.center,
+                          GestureDetector(
+                            onTap: () {
+                              _deleteP(widget.p.pNum!);
+                              widget.onRefresh();
+                            },
+                            child: Container(
+                              alignment: Alignment.topCenter,
+                              width: 55,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xFFFFC8C8),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: Text(
+                                '삭제',
+                                style: TextStyle(fontSize: 10),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                           SizedBox(width: 7.5),
@@ -440,7 +479,7 @@ class _HascommentState extends State<Hascomment> {
                               border: Border.all(color: Colors.black),
                             ),
                             child: Text(
-                              '취소',
+                              '수정',
                               style: TextStyle(fontSize: 10),
                               textAlign: TextAlign.center,
                             ),

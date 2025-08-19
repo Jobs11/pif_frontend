@@ -82,7 +82,7 @@ class _MemberScreenState extends State<MemberScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? DateTime.now(), // 초기 날짜
-      firstDate: DateTime(2000), // 선택 가능 최소 날짜
+      firstDate: DateTime(1990), // 선택 가능 최소 날짜
       lastDate: DateTime(2100), // 선택 가능 최대 날짜
       locale: const Locale('ko', 'KR'), // 한국어 설정
     );
