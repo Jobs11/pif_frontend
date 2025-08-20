@@ -30,76 +30,89 @@ class _ThemesettingState extends State<Themesetting> {
       drawer: PifSidbar(),
       body: Stack(
         children: [
-          // 배경 이미지 (맨 아래)
+          // 배경
           Positioned.fill(
             child: Image.asset(
               'assets/images/background/pif_main.png',
               fit: BoxFit.cover,
             ),
           ),
-          Center(
-            child: Container(
-              margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
-              padding: EdgeInsets.fromLTRB(2, 16, 2, 12),
-              decoration: BoxDecoration(
-                color: Color(0x8CFFFFFF),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              height: 750,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                    padding: EdgeInsets.fromLTRB(2, 16, 2, 12),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFFFFFF),
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(
-                      children: [
-                        // 시스템 기본 설정
-                        selectradio('시스템 기본 테마', 'system'),
-                        const Divider(),
-                        // 라이트 테마
-                        selectradio('라이트 테마', 'light'),
-                        const Divider(),
-                        // 다크 테마
-                        selectradio('다크 테마', 'dark'),
-                        const Divider(),
-                        // 레트로 테마
-                        selectradio('레트로 테마', 'retro'),
-                        const Divider(),
-                        // 차분 테마
-                        selectradio('차분 테마', 'calm'),
-                        const Divider(),
-                        // 에너지 테마
-                        selectradio('에너지 테마', 'energy'),
-                      ],
-                    ),
+
+          // 콘텐츠
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+                  decoration: BoxDecoration(
+                    color: const Color(0x8CFFFFFF),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '테마 변경 내역',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                  // ✅ 고정 높이 제거 (height: 750 없앰)
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ✅ 섹션 1: 가운데 위치 + 내부 텍스트는 좌측 정렬
+                      Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 480),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  '테마 변경 내역',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                decotext('1. 글자 색상 변경'),
+                                decotext('2. 내부 배경 색상 변경'),
+                                decotext('3. 앱 바 색상 변경'),
+                              ],
+                            ),
                           ),
                         ),
-                        decotext('1. 글자 색상 변경'),
-                        decotext('2. 내부 배경 색상 변경'),
-                        decotext('3. 앱 바 색상 변경'),
-                      ],
-                    ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // ✅ 섹션 2(라디오 리스트): 가운데 위치 + 폭 제한
+                      Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 480),
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                            padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xB3FFFFFF),
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Column(
+                              children: [
+                                selectradio('시스템 기본 테마', 'system'),
+                                const Divider(),
+                                selectradio('라이트 테마', 'light'),
+                                const Divider(),
+                                selectradio('다크 테마', 'dark'),
+                                const Divider(),
+                                selectradio('레트로 테마', 'retro'),
+                                const Divider(),
+                                selectradio('차분 테마', 'calm'),
+                                const Divider(),
+                                selectradio('에너지 테마', 'energy'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 import 'package:pif_frontend/screen/setting/alamsetting.dart';
+import 'package:pif_frontend/screen/setting/appinfosetting.dart';
 import 'package:pif_frontend/screen/setting/infosetting.dart';
 import 'package:pif_frontend/screen/setting/languagesetting.dart';
 import 'package:pif_frontend/screen/setting/themesetting.dart';
 import 'package:pif_frontend/screen/setting/usersetting.dart';
+import 'package:pif_frontend/screen/setting/versionsetting.dart';
 import 'package:pif_frontend/utils/functions.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -109,9 +111,25 @@ class SettingScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10),
-                          settingrow('어플리케이션 정보'),
+                          GestureDetector(
+                            onTap: () {
+                              openScreen(
+                                context,
+                                (context) => Appinfosetting(),
+                              );
+                            },
+                            child: settingrow('어플리케이션 정보'),
+                          ),
                           SizedBox(height: 5),
-                          settingrow('버전 정보 & 업데이트 확인'),
+                          GestureDetector(
+                            onTap: () {
+                              openScreen(
+                                context,
+                                (context) => Versionsetting(),
+                              );
+                            },
+                            child: settingrow('버전 정보 & 업데이트 확인'),
+                          ),
                           SizedBox(height: 5),
                           GestureDetector(
                             onTap: () {

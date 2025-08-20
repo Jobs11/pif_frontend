@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/member.dart';
+import 'package:pif_frontend/screen/profile_screen.dart';
 import 'package:pif_frontend/service/memberservice.dart';
 
 Future<String?> profileUpdate(BuildContext context) {
@@ -55,6 +56,14 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
 
       // 성공 시에만 페이지 이동
       Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (_, __, ___) => ProfileScreen(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
     } catch (e) {
       if (!mounted) return;
       Fluttertoast.showToast(
