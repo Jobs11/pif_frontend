@@ -54,7 +54,7 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
         fontSize: 16.0,
       );
 
-      // 성공 시에만 페이지 이동
+      // 성공 시에만 창내리고 페이지 이동
       Navigator.pop(context);
       Navigator.pushReplacement(
         context,
