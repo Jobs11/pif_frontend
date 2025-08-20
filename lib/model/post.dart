@@ -30,4 +30,12 @@ class Post {
     'p_content': pContent,
     'p_public': pPublic,
   };
+
+  Map<String, dynamic> toUpdate() => {
+    'p_id': pId,
+    'r_num': rNum,
+    'p_content': pContent,
+    'p_public': pPublic,
+    'p_num': pNum,
+  };
 }

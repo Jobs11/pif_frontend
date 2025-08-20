@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 
@@ -6,7 +7,7 @@ import 'package:pif_frontend/dialog/show_writer_post.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/post.dart';
 import 'package:pif_frontend/model/record.dart';
-import 'package:pif_frontend/service/heartservice.dart';
+
 import 'package:pif_frontend/service/postservice.dart';
 import 'package:pif_frontend/service/recordservice.dart';
 import 'package:pif_frontend/utils/hascomment.dart';
@@ -23,6 +24,7 @@ class SnsScreen extends StatefulWidget {
 class _SnsScreenState extends State<SnsScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isComment = true;
+  final searchcontroller = TextEditingController();
 
   late Future<List<Post>> posts;
 
@@ -34,6 +36,12 @@ class _SnsScreenState extends State<SnsScreen> {
   void initState() {
     super.initState();
     posts = Postservice.getPostList("공개");
+  }
+
+  void _searchpost(String search) async {
+    setState(() {
+      posts = Postservice.getSearchPost(search);
+    });
   }
 
   void _loadTopPosts() async {
@@ -122,6 +130,7 @@ class _SnsScreenState extends State<SnsScreen> {
                         // 입력
                         Expanded(
                           child: TextField(
+                            controller: searchcontroller,
                             maxLines: 1,
                             decoration: const InputDecoration(
                               hintText: '검색',
@@ -145,7 +154,25 @@ class _SnsScreenState extends State<SnsScreen> {
                             // 없으면 아래 주석 해제해서 기본 아이콘 사용 가능:
                             // color: const Color(0xFF1B8D94),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            (searchcontroller.text.isEmpty)
+                                ? {
+                                    print(searchcontroller.text),
+                                    Fluttertoast.showToast(
+                                      msg: "검색할 단어를 입력해주세요.",
+                                      toastLength: Toast
+                                          .LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+                                      gravity: ToastGravity
+                                          .BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+                                      backgroundColor: const Color(
+                                        0xAA000000,
+                                      ), // 반투명 검정
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    ),
+                                  }
+                                : _searchpost(searchcontroller.text.trim());
+                          },
                         ),
                       ],
                     ),

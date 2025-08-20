@@ -49,7 +49,7 @@ class _AlamsettingState extends State<Alamsetting> {
               margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
               padding: EdgeInsets.fromLTRB(2, 16, 2, 12),
               decoration: BoxDecoration(
-                color: Color(0x8CFFFFFF),
+                color: Color(0xFFFFFFFF),
                 borderRadius: BorderRadius.circular(12),
               ),
               height: 750,

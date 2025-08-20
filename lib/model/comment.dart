@@ -26,4 +26,6 @@ class Comment {
     'c_getnum': cGetnum,
     'c_content': cContent,
   };
+
+  Map<String, dynamic> toUpadate() => {'c_num': cNum, 'c_content': cContent};
 }

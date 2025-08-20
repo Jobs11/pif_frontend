@@ -234,7 +234,7 @@ class _TimerScreenState extends State<TimerScreen> {
                             textColor: Colors.white,
                             fontSize: 16.0,
                           );
-                    onPausePressed();
+                    onResetPressed();
                   },
                   child: Container(
                     width: 244,

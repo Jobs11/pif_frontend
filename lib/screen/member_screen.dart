@@ -29,11 +29,7 @@ class _MemberScreenState extends State<MemberScreen> {
 
   String birtdata = '';
 
-  bool _loading = false;
-
   Future<void> _register() async {
-    setState(() => _loading = true);
-
     final member = Member(
       mName: nameController.text.trim(),
       mNickname: nicknameController.text.trim(),
@@ -73,9 +69,7 @@ class _MemberScreenState extends State<MemberScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   Future<void> _selectDate(BuildContext context) async {

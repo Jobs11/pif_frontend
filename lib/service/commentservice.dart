@@ -9,8 +9,8 @@ class Commentservice {
   static const String getList = "getlist";
   static const String getCount = "getcount";
   static const String getMyCount = "getMyCount";
-  static const String modifyUser = "modify";
-  static const String deleteUser = "delete";
+  static const String modifyComment = "modify";
+  static const String deleteComment = "delete";
 
   static Future<void> registerC(Comment comment) async {
     final url = Uri.parse("$baseUrl/$registerComment");
@@ -19,6 +19,22 @@ class Commentservice {
           url,
           headers: {'Content-Type': 'application/json; charset=utf-8'},
           body: jsonEncode(comment.toJson()),
+        )
+        .timeout(const Duration(seconds: 10));
+
+    // 디버깅에 도움되도록 응답 본문 포함
+    if (res.statusCode != 201 && res.statusCode != 200) {
+      throw Exception("Register failed: ${res.statusCode} ${res.body}");
+    }
+  }
+
+  static Future<void> updatecomment(Comment comment) async {
+    final url = Uri.parse("$baseUrl/$modifyComment");
+    final res = await http
+        .post(
+          url,
+          headers: {'Content-Type': 'application/json; charset=utf-8'},
+          body: jsonEncode(comment.toUpadate()),
         )
         .timeout(const Duration(seconds: 10));
 
@@ -75,5 +91,18 @@ class Commentservice {
     }
 
     throw Exception('로그인 실패: ${response.statusCode}');
+  }
+
+  static Future<void> deleteC(int cNum) async {
+    final url = Uri.parse("$baseUrl/$deleteComment");
+
+    final res = await http.post(
+      url,
+      body: {'c_num': cNum.toString()}, // 요청 파라미터
+    );
+
+    if (res.statusCode != 201 && res.statusCode != 200) {
+      throw Exception("Register failed: ${res.statusCode} ${res.body}");
+    }
   }
 }

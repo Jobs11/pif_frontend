@@ -4,7 +4,9 @@ import 'package:pif_frontend/model/comment.dart';
 import 'package:pif_frontend/model/commentheart.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/member.dart';
+import 'package:pif_frontend/screen/sns_screen.dart';
 import 'package:pif_frontend/service/commentheartservice.dart';
+import 'package:pif_frontend/service/commentservice.dart';
 import 'package:pif_frontend/service/memberservice.dart';
 import 'package:pif_frontend/utils/functions.dart';
 
@@ -25,8 +27,6 @@ class _CommentlistState extends State<Commentlist> {
   final contentController = TextEditingController();
 
   final Set<int> _openCommentIds = <int>{};
-
-  bool _loading = false;
 
   @override
   void initState() {
@@ -70,8 +70,6 @@ class _CommentlistState extends State<Commentlist> {
   }
 
   Future<void> _register(int cNum) async {
-    setState(() => _loading = true);
-
     final commentheart = Commentheart(
       chId: CurrentUser.instance.member!.mId,
       chNum: cNum,
@@ -89,6 +87,15 @@ class _CommentlistState extends State<Commentlist> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (_, __, ___) => SnsScreen(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
     } catch (e) {
       if (!mounted) return;
       Fluttertoast.showToast(
@@ -99,14 +106,10 @@ class _CommentlistState extends State<Commentlist> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   Future<void> _delete(int cNum) async {
-    setState(() => _loading = true);
-
     final commentheart = Commentheart(
       chId: CurrentUser.instance.member!.mId,
       chNum: cNum,
@@ -134,9 +137,76 @@ class _CommentlistState extends State<Commentlist> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
+  }
+
+  Future<void> _update() async {
+    final ucomment = Comment(
+      cId: widget.c.cId,
+      cGetnum: widget.c.cGetnum,
+      cContent: contentController.text.trim(),
+      cNum: widget.c.cNum,
+    );
+
+    try {
+      await Commentservice.updatecomment(ucomment);
+      // 서버는 200/201만 주면 OK
+
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "댓글 수정 완료!",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "댓글 수정 실패! $e",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } finally {}
+  }
+
+  Future<void> _deletec(int cNum) async {
+    try {
+      await Commentservice.deleteC(cNum); // 서버는 200/201만 주면 OK
+
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "댓글 삭제!",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (_, __, ___) => SnsScreen(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Fluttertoast.showToast(
+        msg: "에러 $e",
+        toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
+        gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
+        backgroundColor: const Color(0xAA000000), // 반투명 검정
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } finally {}
   }
 
   @override
@@ -286,25 +356,29 @@ class _CommentlistState extends State<Commentlist> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    width: 22,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      color: Color(0xFFFFC8C8),
-                                      border: Border.all(color: Colors.black),
-                                    ),
-                                    child: Text(
-                                      '삭제',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 6),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _deletec(widget.c.cNum!);
+                                    },
+                                    child: Container(
+                                      width: 22,
+                                      height: 10,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: Color(0xFFFFC8C8),
+                                        border: Border.all(color: Colors.black),
+                                      ),
+                                      child: Text(
+                                        '삭제',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 6),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: 7.5),
                                   GestureDetector(
                                     onTap: () {
                                       _toggleEdits(widget.c);
-                                      print(isOpen);
                                     },
                                     child: Container(
                                       width: 22,
@@ -401,41 +475,52 @@ class _CommentlistState extends State<Commentlist> {
             padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
             child: Row(
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF000000),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  width: 20,
-                  height: 10,
-                  child: Text(
-                    '저장',
-                    style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 5,
-                      fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    _update();
+                    _toggleEdits(widget.c);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF000000),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    width: 20,
+                    height: 10,
+                    child: Text(
+                      '저장',
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 5,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 6),
 
                 // 취소 버튼
-                Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF),
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Colors.black),
-                  ),
-                  width: 20,
-                  height: 10,
-                  child: Text(
-                    '취소',
-                    style: TextStyle(
-                      color: Color(0xFF000000),
-                      fontSize: 5,
-                      fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    _toggleEdits(widget.c);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(color: Colors.black),
+                    ),
+                    width: 20,
+                    height: 10,
+                    child: Text(
+                      '취소',
+                      style: TextStyle(
+                        color: Color(0xFF000000),
+                        fontSize: 5,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

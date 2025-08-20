@@ -64,12 +64,9 @@ class _MemberUpdateScreenState extends State<MemberUpdateScreen> {
     //selectedDate = DateTime.parse(birtdata);
   }
 
-  bool _loading = false;
   final m = CurrentUser.instance.member;
 
   Future<void> _update() async {
-    setState(() => _loading = true);
-
     final member = Member(
       mName: nameController.text.trim(),
       mNickname: nicknameController.text.trim(),
@@ -110,9 +107,7 @@ class _MemberUpdateScreenState extends State<MemberUpdateScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   // Future<void> _selectDate(BuildContext context) async {

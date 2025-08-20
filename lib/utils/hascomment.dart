@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pif_frontend/dialog/update_writer_post.dart';
 import 'package:pif_frontend/model/comment.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/heart.dart';
@@ -43,8 +44,6 @@ class _HascommentState extends State<Hascomment> {
 
   final commentController = TextEditingController();
 
-  bool _loading = false;
-
   @override
   void initState() {
     super.initState();
@@ -82,8 +81,6 @@ class _HascommentState extends State<Hascomment> {
   }
 
   Future<void> _register() async {
-    setState(() => _loading = true);
-
     final comment = Comment(
       cId: CurrentUser.instance.member!.mId,
       cGetnum: widget.p.pNum!,
@@ -123,14 +120,10 @@ class _HascommentState extends State<Hascomment> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   Future<void> _registerh(int pNum) async {
-    setState(() => _loading = true);
-
     final heart = Heart(hId: CurrentUser.instance.member!.mId, hNum: pNum);
 
     try {
@@ -155,14 +148,10 @@ class _HascommentState extends State<Hascomment> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   Future<void> _delete(int pNum) async {
-    setState(() => _loading = true);
-
     final heart = Heart(hId: CurrentUser.instance.member!.mId, hNum: pNum);
 
     try {
@@ -187,14 +176,10 @@ class _HascommentState extends State<Hascomment> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   Future<void> _deleteP(int pNum) async {
-    setState(() => _loading = true);
-
     try {
       await Postservice.deleteP(pNum); // 서버는 200/201만 주면 OK
 
@@ -217,16 +202,14 @@ class _HascommentState extends State<Hascomment> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 380,
-      height: (cmLength > 1) ? 340 : 265,
+      // height: (cmLength > 1) ? 340 : 265,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: Color(0xFFFFF8E7),
@@ -250,6 +233,7 @@ class _HascommentState extends State<Hascomment> {
           return Padding(
             padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
             child: Column(
+              // < 여기서 오버블로우
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -469,19 +453,24 @@ class _HascommentState extends State<Hascomment> {
                           ),
                           SizedBox(width: 7.5),
 
-                          Container(
-                            alignment: Alignment.center,
-                            width: 55,
-                            height: 15,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Color(0xFFD8E7FF),
-                              border: Border.all(color: Colors.black),
-                            ),
-                            child: Text(
-                              '수정',
-                              style: TextStyle(fontSize: 10),
-                              textAlign: TextAlign.center,
+                          GestureDetector(
+                            onTap: () {
+                              updateWriterPost(context, widget.p, widget.r);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 55,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xFFD8E7FF),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: Text(
+                                '수정',
+                                style: TextStyle(fontSize: 10),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ],

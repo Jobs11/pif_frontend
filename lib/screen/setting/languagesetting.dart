@@ -12,6 +12,8 @@ class Languagesetting extends StatefulWidget {
 class _LanguagesettingState extends State<Languagesetting> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String _selectedLanguage = "korean";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,11 +47,74 @@ class _LanguagesettingState extends State<Languagesetting> {
                 borderRadius: BorderRadius.circular(12),
               ),
               height: 750,
-              child: Column(),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                      padding: EdgeInsets.fromLTRB(2, 16, 2, 12),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Column(
+                        children: [
+                          // 시스템 기본 설정
+                          selectradio('한국어', 'Korean'),
+                          const Divider(),
+                          // 라이트 테마
+                          selectradio('English', 'English'),
+                          const Divider(),
+                          // 다크 테마
+                          selectradio('日本語', 'Japanese'),
+                          const Divider(),
+                          // 레트로 테마
+                          selectradio('简体中文 (Simplified)', 'Simplified'),
+                          const Divider(),
+                          // 차분 테마
+                          selectradio('繁體中文 (Traditional)', 'Traditional'),
+                          const Divider(),
+                          // 에너지 테마
+                          selectradio('Español', 'Spanish'),
+                          const Divider(),
+                          // 에너지 테마
+                          selectradio('Português', 'Portuguese'),
+                          const Divider(),
+                          // 에너지 테마
+                          selectradio('Français', 'French'),
+                          const Divider(),
+                          // 에너지 테마
+                          selectradio('Deutsch', 'German'),
+                          const Divider(),
+                          // 에너지 테마
+                          selectradio('Русский', 'Russian'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
+  RadioListTile<String> selectradio(String title, String value) {
+    return RadioListTile(
+      title: Text(title),
+      value: value,
+      groupValue: _selectedLanguage,
+      activeColor: Colors.teal,
+      onChanged: (value) {
+        setState(() => _selectedLanguage = value!);
+      },
+    );
+  }
+
+  Text decotext(String title) =>
+      Text(title, textAlign: TextAlign.start, style: TextStyle(fontSize: 20));
 }

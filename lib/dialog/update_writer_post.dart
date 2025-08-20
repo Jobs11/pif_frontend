@@ -3,49 +3,67 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/dialog/list_memory.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/post.dart';
+import 'package:pif_frontend/model/record.dart';
 import 'package:pif_frontend/screen/sns_screen.dart';
 import 'package:pif_frontend/service/postservice.dart';
 
-Future<void> showWriterPost(BuildContext context) {
+Future<void> updateWriterPost(BuildContext context, Post p, Records r) {
   return showDialog(
     context: context,
     barrierDismissible: true,
-    builder: (_) => const Dialog(
+    builder: (_) => Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      child: _PostWriterDialog(),
+      child: _PostUpdateDialog(p: p, r: r),
     ),
   );
 }
 
-class _PostWriterDialog extends StatefulWidget {
-  const _PostWriterDialog();
+class _PostUpdateDialog extends StatefulWidget {
+  final Post p;
+  final Records r;
+
+  const _PostUpdateDialog({
+    //✅ key는 이렇게 named parameter로
+    required this.p, // ✅ Post
+    required this.r, // ✅ Record
+  });
 
   @override
-  State<_PostWriterDialog> createState() => _DailyTraceDialogState();
+  State<_PostUpdateDialog> createState() => _PostUpdateDialogState();
 }
 
-class _DailyTraceDialogState extends State<_PostWriterDialog> {
+class _PostUpdateDialogState extends State<_PostUpdateDialog> {
   String _scope = '공개';
   final contentController = TextEditingController();
   String? _selectedTime;
   String? _selectedMemo;
   int? _selectedNum;
 
-  Future<void> _register() async {
+  @override
+  void initState() {
+    super.initState();
+    _selectedNum = widget.r.rNum;
+    _selectedMemo = widget.r.rDecoration;
+    _selectedTime = widget.r.rTime;
+    contentController.text = widget.p.pContent;
+  }
+
+  Future<void> update() async {
     final post = Post(
       pId: CurrentUser.instance.member!.mId,
       rNum: _selectedNum!,
       pContent: contentController.text.trim(),
       pPublic: _scope,
+      pNum: widget.p.pNum,
     );
 
     try {
-      await Postservice.registerP(post); // 서버는 200/201만 주면 OK
+      await Postservice.updateP(post); // 서버는 200/201만 주면 OK
 
       if (!mounted) return;
       Fluttertoast.showToast(
-        msg: "작성 완료!",
+        msg: "수정 완료!",
         toastLength: Toast.LENGTH_SHORT, // Toast.LENGTH_LONG 가능
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
@@ -105,7 +123,7 @@ class _DailyTraceDialogState extends State<_PostWriterDialog> {
           children: [
             // 헤더 타이틀
             Text(
-              '기억 속 이야기 작성',
+              '기억 속 이야기 수정',
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w800,
@@ -260,7 +278,7 @@ class _DailyTraceDialogState extends State<_PostWriterDialog> {
                       ),
                       const SizedBox(height: 8),
 
-                      // 하단: 태그 + 게시 버튼
+                      // 하단: 태그 + 수정 + 취소 버튼
                       Row(
                         children: [
                           Row(
@@ -277,7 +295,32 @@ class _DailyTraceDialogState extends State<_PostWriterDialog> {
                           const Spacer(),
                           GestureDetector(
                             onTap: () {
-                              _register();
+                              update();
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD8E7FF),
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              height: 20,
+                              child: const Text(
+                                '수정',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
                             },
                             child: Container(
                               alignment: Alignment.center,
@@ -291,7 +334,7 @@ class _DailyTraceDialogState extends State<_PostWriterDialog> {
                               ),
                               height: 20,
                               child: const Text(
-                                '게시',
+                                '취소',
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w700,

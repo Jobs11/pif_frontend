@@ -13,14 +13,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _loading = false;
-
   final idController = TextEditingController();
   final passwordController = TextEditingController();
 
   Future<void> _login() async {
-    setState(() => _loading = true);
-
     final id = idController.text.trim();
     final password = passwordController.text.trim();
 
@@ -54,9 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   @override

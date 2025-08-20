@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pif_frontend/dialog/update_writer_post.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/heart.dart';
 import 'package:pif_frontend/model/member.dart';
@@ -35,8 +36,6 @@ class _UncommentState extends State<Uncomment> {
   late Future<int> countH;
   late Future<int> countAllH;
 
-  bool _loading = false;
-
   @override
   void initState() {
     super.initState();
@@ -67,8 +66,6 @@ class _UncommentState extends State<Uncomment> {
   }
 
   Future<void> _register(int pNum) async {
-    setState(() => _loading = true);
-
     final heart = Heart(hId: CurrentUser.instance.member!.mId, hNum: pNum);
 
     try {
@@ -93,14 +90,10 @@ class _UncommentState extends State<Uncomment> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   Future<void> _delete(int pNum) async {
-    setState(() => _loading = true);
-
     final heart = Heart(hId: CurrentUser.instance.member!.mId, hNum: pNum);
 
     try {
@@ -125,14 +118,10 @@ class _UncommentState extends State<Uncomment> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   Future<void> _deleteP(int pNum) async {
-    setState(() => _loading = true);
-
     try {
       await Postservice.deleteP(pNum); // 서버는 200/201만 주면 OK
 
@@ -155,9 +144,7 @@ class _UncommentState extends State<Uncomment> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    } finally {}
   }
 
   @override
@@ -429,19 +416,24 @@ class _UncommentState extends State<Uncomment> {
                           ),
                           SizedBox(width: 7.5),
 
-                          Container(
-                            alignment: Alignment.center,
-                            width: 55,
-                            height: 15,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Color(0xFFD8E7FF),
-                              border: Border.all(color: Colors.black),
-                            ),
-                            child: Text(
-                              '수정',
-                              style: TextStyle(fontSize: 10),
-                              textAlign: TextAlign.center,
+                          GestureDetector(
+                            onTap: () {
+                              updateWriterPost(context, widget.p, widget.r);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 55,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xFFD8E7FF),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: Text(
+                                '수정',
+                                style: TextStyle(fontSize: 10),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ],
