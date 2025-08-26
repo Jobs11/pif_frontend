@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 import 'package:pif_frontend/dialog/profile_update.dart';
@@ -40,9 +41,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '기억의 주인',
           isMenu: true,
@@ -63,16 +65,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           Center(
             child: Container(
-              margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+              margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+              padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
               decoration: BoxDecoration(
                 color: Color(0x8CFFFFFF),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
-              width: 411,
-              height: 750,
+              width: 411.w,
+              height: 750.h,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0.w),
                 child: Column(
                   children: [
                     GestureDetector(
@@ -85,8 +87,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             CurrentUser.instance.member!.mPaint ??
                                 'assets/images/addicon/user.png',
                             fit: BoxFit.cover,
-                            width: 150,
-                            height: 150,
+                            width: 150.w,
+                            height: 150.h,
                           ),
 
                           // 겹칠 Column
@@ -109,14 +111,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Image.asset(
                                     'assets/images/addicon/camera.png',
                                     fit: BoxFit.cover,
-                                    width: 70,
-                                    height: 70,
+                                    width: 70.w,
+                                    height: 70.h,
                                   ),
-                                  const SizedBox(height: 10),
-                                  const Text(
+                                  SizedBox(height: 10.h),
+                                  Text(
                                     '편집',
                                     style: TextStyle(
-                                      fontSize: 25,
+                                      fontSize: 25.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black, // 배경 대비 위해 색 추가
                                     ),
@@ -127,22 +129,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 15.h),
                     Text(
                       CurrentUser.instance.member?.mNickname ?? "손님",
                       style: TextStyle(
                         color: Color(0xFF146467),
-                        fontSize: 48,
+                        fontSize: 48.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 15.h),
                     Container(
                       decoration: BoxDecoration(color: Color(0xFF000000)),
                       width: double.infinity,
-                      height: 3,
+                      height: 3.h,
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 15.h),
                     // 작성한 게시글 수
                     countingData(
                       countP,
@@ -150,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       '작성한 게시글 수:',
                     ),
 
-                    SizedBox(height: 15),
+                    SizedBox(height: 15.h),
                     // 좋아요 한 게시글 수
                     countingData(
                       countPH,
@@ -158,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       '좋아요 한 게시글 수:',
                     ),
 
-                    SizedBox(height: 15),
+                    SizedBox(height: 15.h),
 
                     // 작성한 댓글 수
                     countingData(
@@ -167,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       '작성한 댓글 수:',
                     ),
 
-                    SizedBox(height: 15),
+                    SizedBox(height: 15.h),
 
                     // 좋아요 한 댓글 수
                     countingData(
@@ -175,15 +177,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       'assets/images/addicon/f_heart.png',
                       '좋아요 한 댓글 수:',
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 15.h),
                     Container(
                       decoration: BoxDecoration(color: Color(0xFF000000)),
                       width: double.infinity,
-                      height: 3,
+                      height: 3.h,
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 15.h),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -198,19 +200,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               },
                               child: Container(
-                                margin: const EdgeInsets.only(right: 8),
+                                margin: EdgeInsets.only(right: 8.w),
                                 alignment: Alignment.center, //
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(20.r),
                                   border: Border.all(color: Colors.black),
                                   color: Color(0xFFF9CC89),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(8.0.w),
                                   child: Text(
                                     '프로필 수정',
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 20.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -229,19 +231,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               },
                               child: Container(
-                                margin: const EdgeInsets.only(right: 8),
+                                margin: EdgeInsets.only(right: 8.w),
                                 alignment: Alignment.center, //
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(20.r),
                                   border: Border.all(color: Colors.black),
                                   color: Color(0xFFF9CC89),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(8.0.w),
                                   child: Text(
                                     '로그 아웃',
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 20.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -284,19 +286,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20.r),
             border: Border.all(color: Colors.black),
             color: Color.fromARGB(255, 233, 255, 254),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0.w),
             child: Row(
               children: [
-                Image.asset(img, width: 30, height: 30),
-                SizedBox(width: 20),
+                Image.asset(img, width: 30.w, height: 30.h),
+                SizedBox(width: 20.w),
                 Text(
                   '$title $d',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

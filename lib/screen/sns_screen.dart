@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
@@ -82,9 +83,10 @@ class _SnsScreenState extends State<SnsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '기억 속 이야기',
           isMenu: true,
@@ -105,24 +107,24 @@ class _SnsScreenState extends State<SnsScreen> {
           ),
           Center(
             child: Container(
-              margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+              margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+              padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
               decoration: BoxDecoration(
                 color: Color(0x8CFFFFFF),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
-              height: 750,
+              height: 750.h,
               child: Column(
                 children: [
                   Container(
                     alignment: Alignment.center,
-                    height: 30,
+                    height: 30.h,
                     decoration: BoxDecoration(
                       color: const Color(0xCCFFFFFF),
-                      borderRadius: BorderRadius.circular(30), // 알약 모양
+                      borderRadius: BorderRadius.circular(30.r), // 알약 모양
                       border: Border.all(
                         color: const Color(0xFF1B1B1B),
-                        width: 1.5,
+                        width: 1.5.w,
                       ),
                     ),
                     child: Row(
@@ -132,21 +134,21 @@ class _SnsScreenState extends State<SnsScreen> {
                           child: TextField(
                             controller: searchcontroller,
                             maxLines: 1,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               hintText: '검색',
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 8,
+                                horizontal: 10.w,
+                                vertical: 8.h,
                               ),
                             ),
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(fontSize: 15.sp),
                           ),
                         ),
 
                         // 오른쪽 둥근 아이콘 버튼
                         IconButton(
-                          iconSize: 21,
+                          iconSize: 21.sp,
                           padding: EdgeInsets.zero,
                           icon: Image.asset(
                             // 아이콘 이미지(있으면 사용)
@@ -168,7 +170,7 @@ class _SnsScreenState extends State<SnsScreen> {
                                         0xAA000000,
                                       ), // 반투명 검정
                                       textColor: Colors.white,
-                                      fontSize: 16.0,
+                                      fontSize: 16.0.sp,
                                     ),
                                   }
                                 : _searchpost(searchcontroller.text.trim());
@@ -177,7 +179,7 @@ class _SnsScreenState extends State<SnsScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 13.5),
+                  SizedBox(height: 13.5.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -201,15 +203,15 @@ class _SnsScreenState extends State<SnsScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Container(
                     decoration: BoxDecoration(color: Color(0xFF6AD9D4)),
                     width: double.infinity,
-                    height: 6,
+                    height: 6.h,
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    padding: EdgeInsets.fromLTRB(8.w, 0.h, 8.w, 0.h),
                     child: GestureDetector(
                       onTap: () {
                         showWriterPost(context);
@@ -219,33 +221,33 @@ class _SnsScreenState extends State<SnsScreen> {
                         decoration: BoxDecoration(
                           color: Color.fromARGB(255, 214, 252, 227),
                           border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(30.r),
                         ),
                         width: double.infinity,
-                        height: 24,
+                        height: 24.h,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               '오늘의 하루는 어떠셨나요?',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 8),
+                            SizedBox(width: 8.h),
                             Image.asset(
                               'assets/images/addicon/click.png',
-                              height: 20,
-                              width: 20,
+                              height: 20.w,
+                              width: 20.h,
                             ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
-                  SizedBox(height: 540, child: newlist()),
+                  SizedBox(height: 16.h),
+                  SizedBox(height: 540.h, child: newlist()),
                 ],
               ),
             ),

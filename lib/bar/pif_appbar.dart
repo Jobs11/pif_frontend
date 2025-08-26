@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PifAppbar extends StatelessWidget {
   final String titlename;
@@ -28,8 +29,8 @@ class PifAppbar extends StatelessWidget {
               child: IconButton(
                 icon: Image.asset(
                   'assets/images/addicon/menu.png',
-                  width: 21,
-                  height: 21,
+                  width: 21.w,
+                  height: 21.h,
                 ),
                 onPressed: onMenuPressed,
               ),
@@ -39,7 +40,7 @@ class PifAppbar extends StatelessWidget {
       title: Text(
         titlename,
         style: TextStyle(
-          fontSize: 32,
+          fontSize: 32.sp,
           color: Color(0xFF146467),
           fontWeight: FontWeight.bold,
         ),

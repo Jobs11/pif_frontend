@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/record.dart';
 import 'package:pif_frontend/service/recordservice.dart';
@@ -7,9 +8,9 @@ Future<Records?> listMemory(BuildContext context) {
   return showDialog<Records>(
     context: context,
     barrierDismissible: true,
-    builder: (_) => const Dialog(
+    builder: (_) => Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      insetPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
       child: _ListMemoryDialog(),
     ),
   );
@@ -43,7 +44,7 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
           ), // 배경 이미지 경로
           fit: BoxFit.cover, // 화면 꽉 채우기
         ),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(24.r),
         boxShadow: const [
           BoxShadow(
             color: Colors.black12,
@@ -53,7 +54,7 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+        padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 20.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -61,13 +62,13 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
             Text(
               '작성한 기억 목록',
               style: TextStyle(
-                fontSize: 26,
+                fontSize: 26.sp,
                 fontWeight: FontWeight.w800,
                 color: Colors.teal.shade900,
                 letterSpacing: 1.0,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
 
             // 본문 카드
             Stack(
@@ -75,7 +76,7 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
                 Container(
                   decoration: BoxDecoration(
                     color: cardBg,
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(24.r),
                     border: Border.all(color: Colors.black),
                     boxShadow: const [
                       BoxShadow(
@@ -85,11 +86,11 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
                       ),
                     ],
                   ),
-                  padding: const EdgeInsets.fromLTRB(16, 18, 16, 12),
+                  padding: EdgeInsets.fromLTRB(16.w, 18.h, 16.w, 12.h),
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    padding: EdgeInsets.fromLTRB(15.w, 0, 15.h, 0),
                     child: SizedBox(
-                      height: 580,
+                      height: 580.h,
                       child: FutureBuilder<List<Records>>(
                         future: records, // ← 서버 호출 Future
                         builder: (context, snapshot) {
@@ -113,7 +114,7 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
                           return ListView.separated(
                             itemCount: items.length,
                             separatorBuilder: (context, index) =>
-                                const SizedBox(height: 13),
+                                SizedBox(height: 13.h),
                             itemBuilder: (context, index) {
                               final r = items[index];
 
@@ -140,11 +141,11 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
                                   ),
                                   width: double.infinity,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      15,
-                                      6,
-                                      15,
-                                      5,
+                                    padding: EdgeInsets.fromLTRB(
+                                      15.w,
+                                      6.h,
+                                      15.w,
+                                      5.h,
                                     ),
                                     child: Column(
                                       children: [
@@ -165,12 +166,12 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
                                             inputLM(displayTimer, 10, 80),
                                           ],
                                         ),
-                                        const SizedBox(height: 8),
+                                        SizedBox(height: 8.h),
                                         Container(
                                           alignment: Alignment.centerLeft,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
-                                              30,
+                                              30.r,
                                             ),
                                             color: const Color(0XFFFFFFFF),
                                             border: Border.all(
@@ -178,12 +179,10 @@ class _ListMemoryDialogState extends State<_ListMemoryDialog> {
                                             ),
                                           ),
                                           width: double.infinity,
-                                          height: 35,
+                                          height: 35.h,
                                           child: Text(
                                             '  $memo',
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                            ),
+                                            style: TextStyle(fontSize: 15.sp),
                                           ),
                                         ),
                                       ],
@@ -213,15 +212,15 @@ Container inputLM(String title, double size, double wsize) {
   return Container(
     alignment: Alignment.center,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(30.r),
       color: Color(0Xffffffff),
       border: Border.all(color: Colors.black),
     ),
-    width: wsize,
-    height: 35,
+    width: wsize.w,
+    height: 35.h,
     child: Text(
       title,
-      style: TextStyle(fontSize: size, fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: size.sp, fontWeight: FontWeight.bold),
     ),
   );
 }

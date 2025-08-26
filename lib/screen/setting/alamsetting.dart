@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 
@@ -25,7 +26,7 @@ class _AlamsettingState extends State<Alamsetting> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '알림 설정',
           isMenu: false,
@@ -46,16 +47,16 @@ class _AlamsettingState extends State<Alamsetting> {
           ),
           Center(
             child: Container(
-              margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
-              padding: EdgeInsets.fromLTRB(2, 16, 2, 12),
+              margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+              padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
               decoration: BoxDecoration(
                 color: Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
-              height: 750,
+              height: 750.h,
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0.w),
                   child: Column(
                     children: [
                       Column(
@@ -159,7 +160,7 @@ class _AlamsettingState extends State<Alamsetting> {
     return Text(
       title,
       textAlign: TextAlign.start,
-      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 
@@ -12,7 +13,7 @@ class Versionsetting extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '버전 정보',
           isMenu: false,
@@ -33,30 +34,30 @@ class Versionsetting extends StatelessWidget {
           ),
           Center(
             child: Container(
-              margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
-              padding: EdgeInsets.fromLTRB(2, 16, 2, 12),
+              margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+              padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
               decoration: BoxDecoration(
                 color: Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
-              height: 300,
+              height: 300.h,
               width: double.infinity,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0.w),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start, // ← 위쪽 정렬
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text("App Version", style: TextStyle(fontSize: 40)),
-                    const SizedBox(height: 8),
-                    const Text(
+                    Text("App Version", style: TextStyle(fontSize: 40.sp)),
+                    SizedBox(height: 8.h),
+                    Text(
                       "1.0.0", // ← 현재 버전 표시
                       style: TextStyle(
-                        fontSize: 56,
+                        fontSize: 56.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     OutlinedButton(
                       onPressed: () {
                         // 업데이트 확인 로직 (예: 서버 버전 체크)
@@ -65,11 +66,11 @@ class Versionsetting extends StatelessWidget {
                         );
                       },
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 20,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40.w,
+                          vertical: 20.h,
                         ), // ← 버튼 크기 커짐
-                        textStyle: const TextStyle(fontSize: 20), // ← 글자 크기도 키움
+                        textStyle: TextStyle(fontSize: 20.sp), // ← 글자 크기도 키움
                       ),
                       child: const Text("Check for updates"),
                     ),

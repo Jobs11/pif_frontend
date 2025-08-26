@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 
@@ -12,7 +13,7 @@ class Appinfosetting extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '버전 정보',
           isMenu: false,
@@ -33,11 +34,11 @@ class Appinfosetting extends StatelessWidget {
           ),
           Center(
             child: Container(
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(24),
+              margin: EdgeInsets.all(16.w),
+              padding: EdgeInsets.all(24.w),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -55,38 +56,41 @@ class Appinfosetting extends StatelessWidget {
                     children: [
                       Image.asset(
                         'assets/images/addicon/logo.png',
-                        width: 70,
-                        height: 70,
+                        width: 70.w,
+                        height: 70.h,
                       ),
-                      const SizedBox(width: 12),
-                      const Column(
+                      SizedBox(width: 12.w),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "PIF",
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: 28.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             "버전 1.0.0",
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.grey,
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // 앱 설명
-                  const Text(
+                  Text(
                     "PIF는 사용자의 행동을 시간 단위로 기록하고\n"
                     "이를 기반으로 다른 사람들과 소통할 수 있는 SNS입니다.",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, height: 1.5),
+                    style: TextStyle(fontSize: 16.sp, height: 1.5.h),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // 버튼 3개
                   SizedBox(
@@ -98,7 +102,7 @@ class Appinfosetting extends StatelessWidget {
                       child: const Text("이용약관"),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
@@ -108,7 +112,7 @@ class Appinfosetting extends StatelessWidget {
                       child: const Text("개인정보 처리방침"),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
@@ -122,7 +126,7 @@ class Appinfosetting extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   const Text(
                     "© 2025 PIF Team",
                     style: TextStyle(color: Colors.grey),

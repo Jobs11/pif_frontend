@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Container searchbt(String title) {
   return Container(
-    width: 105,
-    height: 20,
+    width: 105.w,
+    height: 20.h,
     alignment: Alignment.center,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(30.r),
       border: Border.all(color: Colors.black),
     ),
-    child: Text(title, style: TextStyle(fontSize: 15)),
+    child: Text(title, style: TextStyle(fontSize: 15.sp)),
   );
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/dialog/update_writer_post.dart';
 import 'package:pif_frontend/model/currentuser.dart';
@@ -78,7 +79,7 @@ class _UncommentState extends State<Uncomment> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } catch (e) {
       if (!mounted) return;
@@ -88,7 +89,7 @@ class _UncommentState extends State<Uncomment> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -106,7 +107,7 @@ class _UncommentState extends State<Uncomment> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } catch (e) {
       if (!mounted) return;
@@ -116,7 +117,7 @@ class _UncommentState extends State<Uncomment> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -132,7 +133,7 @@ class _UncommentState extends State<Uncomment> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } catch (e) {
       if (!mounted) return;
@@ -142,7 +143,7 @@ class _UncommentState extends State<Uncomment> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -150,10 +151,10 @@ class _UncommentState extends State<Uncomment> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 380,
-      height: 160,
+      width: 380.w,
+      height: 160.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(30.r),
         color: Color(0xFFFFF8E7),
         border: Border.all(color: Colors.black),
       ),
@@ -173,40 +174,40 @@ class _UncommentState extends State<Uncomment> {
           final m = snapshot.data!;
 
           return Padding(
-            padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
+            padding: EdgeInsets.fromLTRB(10.w, 8.h, 10.w, 8.h),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      height: 25,
+                      height: 25.h,
                       // 프로필 사진 이름
                       child: Row(
                         children: [
                           Image.asset(
                             m.mPaint ?? 'assets/images/addicon/user.png',
-                            width: 20,
-                            height: 20,
+                            width: 20.w,
+                            height: 20.h,
                           ),
-                          SizedBox(width: 8),
+                          SizedBox(width: 8.h),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SizedBox(
-                                height: 12,
+                                height: 12.h,
                                 child: Text(
                                   m.mName,
-                                  style: TextStyle(fontSize: 8),
+                                  style: TextStyle(fontSize: 8.sp),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
 
                               SizedBox(
-                                height: 12,
+                                height: 12.h,
                                 child: Text(
                                   hoursAgoFromMysql(widget.p.pRegisterdate!),
-                                  style: TextStyle(fontSize: 8),
+                                  style: TextStyle(fontSize: 8.sp),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -218,59 +219,59 @@ class _UncommentState extends State<Uncomment> {
                     // 타이머 시간
                     Container(
                       alignment: Alignment.center,
-                      width: 80,
-                      height: 25,
+                      width: 80.w,
+                      height: 25.h,
                       decoration: BoxDecoration(
                         color: Color(0xFFE0E0E0),
                         border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Text(
                         widget.r.rTime,
-                        style: TextStyle(fontSize: 10),
+                        style: TextStyle(fontSize: 10.sp),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 6.5),
+                SizedBox(height: 6.5.h),
 
                 // 기록 관련
                 Row(
                   children: [
                     Image.asset(
                       'assets/images/addicon/clock.png',
-                      width: 15,
-                      height: 15,
+                      width: 15.w,
+                      height: 15.h,
                     ),
-                    SizedBox(width: 4.5),
+                    SizedBox(width: 4.5.w),
                     SizedBox(
-                      width: 50,
-                      height: 15,
+                      width: 50.w,
+                      height: 15.h,
                       child: Text(
                         widget.r.rDecoration,
-                        style: TextStyle(fontSize: 10),
+                        style: TextStyle(fontSize: 10.sp),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 6.5),
+                SizedBox(height: 6.5.h),
 
                 // 흔적 내용
                 SizedBox(
-                  width: 358,
-                  height: 36,
+                  width: 358.w,
+                  height: 36.h,
                   child: Text(
                     widget.p.pContent,
-                    style: TextStyle(fontSize: 15),
+                    style: TextStyle(fontSize: 15.sp),
                   ),
                 ),
-                SizedBox(height: 6.5),
+                SizedBox(height: 6.5.h),
                 Container(
                   decoration: BoxDecoration(color: Color(0xFF000000)),
                   width: double.infinity,
-                  height: 2,
+                  height: 2.h,
                 ),
-                SizedBox(height: 6.5),
+                SizedBox(height: 6.5.h),
 
                 // 좋아요 및 댓글
                 Row(
@@ -304,13 +305,13 @@ class _UncommentState extends State<Uncomment> {
                                 (h != 0)
                                     ? 'assets/images/addicon/f_heart.png'
                                     : 'assets/images/addicon/e_heart.png',
-                                width: 15,
-                                height: 15,
+                                width: 15.w,
+                                height: 15.h,
                               ),
                             );
                           },
                         ),
-                        SizedBox(width: 15),
+                        SizedBox(width: 15.w),
                         FutureBuilder<int>(
                           future: countAllH,
                           builder: (context, snapshot) {
@@ -332,27 +333,27 @@ class _UncommentState extends State<Uncomment> {
                             final h = snapshot.data!;
 
                             return SizedBox(
-                              width: 38,
-                              height: 15,
+                              width: 38.w,
+                              height: 15.h,
                               child: Text(
                                 h.toString(),
-                                style: TextStyle(fontSize: 12),
+                                style: TextStyle(fontSize: 12.sp),
                               ),
                             );
                           },
                         ),
-                        SizedBox(width: 12),
+                        SizedBox(width: 12.w),
                         GestureDetector(
                           onTap: () {
                             widget.onToggle();
                           },
                           child: Image.asset(
                             'assets/images/addicon/messenger.png',
-                            width: 15,
-                            height: 15,
+                            width: 15.w,
+                            height: 15.h,
                           ),
                         ),
-                        SizedBox(width: 15),
+                        SizedBox(width: 15.h),
                         FutureBuilder<int>(
                           future: countC,
                           builder: (context, snapshot) {
@@ -374,11 +375,11 @@ class _UncommentState extends State<Uncomment> {
                             final c = snapshot.data!;
 
                             return SizedBox(
-                              width: 38,
-                              height: 15,
+                              width: 38.w,
+                              height: 15.h,
                               child: Text(
                                 c.toString(),
-                                style: TextStyle(fontSize: 12),
+                                style: TextStyle(fontSize: 12.sp),
                               ),
                             );
                           },
@@ -400,21 +401,21 @@ class _UncommentState extends State<Uncomment> {
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              width: 55,
-                              height: 15,
+                              width: 55.w,
+                              height: 15.h,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 color: Color(0xFFFFC8C8),
                                 border: Border.all(color: Colors.black),
                               ),
                               child: Text(
                                 '삭제',
-                                style: TextStyle(fontSize: 10),
+                                style: TextStyle(fontSize: 10.sp),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                           ),
-                          SizedBox(width: 7.5),
+                          SizedBox(width: 7.5.w),
 
                           GestureDetector(
                             onTap: () {
@@ -422,16 +423,16 @@ class _UncommentState extends State<Uncomment> {
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              width: 55,
-                              height: 15,
+                              width: 55.w,
+                              height: 15.h,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 color: Color(0xFFD8E7FF),
                                 border: Border.all(color: Colors.black),
                               ),
                               child: Text(
                                 '수정',
-                                style: TextStyle(fontSize: 10),
+                                style: TextStyle(fontSize: 10.sp),
                                 textAlign: TextAlign.center,
                               ),
                             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/model/comment.dart';
 import 'package:pif_frontend/model/commentheart.dart';
@@ -85,7 +86,7 @@ class _CommentlistState extends State<Commentlist> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
 
       Navigator.pushReplacement(
@@ -104,7 +105,7 @@ class _CommentlistState extends State<Commentlist> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -125,7 +126,7 @@ class _CommentlistState extends State<Commentlist> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } catch (e) {
       if (!mounted) return;
@@ -135,7 +136,7 @@ class _CommentlistState extends State<Commentlist> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -159,7 +160,7 @@ class _CommentlistState extends State<Commentlist> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } catch (e) {
       if (!mounted) return;
@@ -169,7 +170,7 @@ class _CommentlistState extends State<Commentlist> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -185,7 +186,7 @@ class _CommentlistState extends State<Commentlist> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
 
       Navigator.pushReplacement(
@@ -204,7 +205,7 @@ class _CommentlistState extends State<Commentlist> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -213,11 +214,11 @@ class _CommentlistState extends State<Commentlist> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 54,
+      height: 54.h,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black),
         color: Color(0xFFFFFFFF),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(30.r),
       ),
       child: FutureBuilder<Member>(
         future: member,
@@ -235,21 +236,21 @@ class _CommentlistState extends State<Commentlist> {
           final member = snapshot.data!;
 
           return Padding(
-            padding: const EdgeInsets.fromLTRB(5, 8, 5, 8),
+            padding: EdgeInsets.fromLTRB(5.w, 8.h, 5.w, 8.h),
             child: Row(
               children: [
                 // 프로필 사진
                 Image.asset(
                   member.mPaint ?? 'assets/images/addicon/user.png',
-                  width: 28,
-                  height: 28,
+                  width: 28.w,
+                  height: 28.h,
                 ),
-                SizedBox(width: 4.5),
+                SizedBox(width: 4.5.w),
                 Column(
                   children: [
                     Expanded(
                       child: SizedBox(
-                        width: 295,
+                        width: 295.w,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -257,14 +258,14 @@ class _CommentlistState extends State<Commentlist> {
                             Row(
                               children: [
                                 SizedBox(
-                                  width: 40,
-                                  height: 10,
+                                  width: 40.w,
+                                  height: 10.h,
                                   child: Text(
                                     member.mName,
-                                    style: TextStyle(fontSize: 8),
+                                    style: TextStyle(fontSize: 8.sp),
                                   ),
                                 ),
-                                SizedBox(width: 3),
+                                SizedBox(width: 3.w),
                                 FutureBuilder<int>(
                                   future: countCH,
                                   builder: (context, snapshot) {
@@ -294,13 +295,13 @@ class _CommentlistState extends State<Commentlist> {
                                         (h != 0)
                                             ? 'assets/images/addicon/f_heart.png'
                                             : 'assets/images/addicon/e_heart.png',
-                                        width: 7,
-                                        height: 7,
+                                        width: 7.w,
+                                        height: 7.h,
                                       ),
                                     );
                                   },
                                 ),
-                                SizedBox(width: 5.5),
+                                SizedBox(width: 5.5.w),
                                 FutureBuilder<int>(
                                   future: countAllCH,
                                   builder: (context, snapshot) {
@@ -324,22 +325,22 @@ class _CommentlistState extends State<Commentlist> {
                                     final h = snapshot.data!;
 
                                     return SizedBox(
-                                      width: 22,
-                                      height: 10,
+                                      width: 22.w,
+                                      height: 10.h,
                                       child: Text(
                                         h.toString(),
-                                        style: TextStyle(fontSize: 8),
+                                        style: TextStyle(fontSize: 8.sp),
                                       ),
                                     );
                                   },
                                 ),
-                                SizedBox(width: 3),
+                                SizedBox(width: 3.w),
                                 SizedBox(
-                                  width: 30,
-                                  height: 10,
+                                  width: 30.w,
+                                  height: 10.h,
                                   child: Text(
                                     hoursAgoFromMysql(widget.c.cRegisterdate!),
-                                    style: TextStyle(fontSize: 8),
+                                    style: TextStyle(fontSize: 8.h),
                                   ),
                                 ),
                               ],
@@ -361,37 +362,41 @@ class _CommentlistState extends State<Commentlist> {
                                       _deletec(widget.c.cNum!);
                                     },
                                     child: Container(
-                                      width: 22,
-                                      height: 10,
+                                      width: 22.w,
+                                      height: 10.h,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                          30.r,
+                                        ),
                                         color: Color(0xFFFFC8C8),
                                         border: Border.all(color: Colors.black),
                                       ),
                                       child: Text(
                                         '삭제',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 6),
+                                        style: TextStyle(fontSize: 6.sp),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 7.5),
+                                  SizedBox(width: 7.5.h),
                                   GestureDetector(
                                     onTap: () {
                                       _toggleEdits(widget.c);
                                     },
                                     child: Container(
-                                      width: 22,
-                                      height: 10,
+                                      width: 22.w,
+                                      height: 10.h,
 
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                          30.r,
+                                        ),
                                         color: const Color(0xFFD8E7FF),
                                         border: Border.all(color: Colors.black),
                                       ),
-                                      child: const Text(
+                                      child: Text(
                                         '수정',
-                                        style: TextStyle(fontSize: 6),
+                                        style: TextStyle(fontSize: 6.sp),
                                         textAlign: TextAlign.center, // 가로 중앙
                                       ),
                                     ),
@@ -403,18 +408,18 @@ class _CommentlistState extends State<Commentlist> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 3),
+                    SizedBox(height: 3.h),
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerLeft,
-                        width: 295,
-                        height: 23,
+                        width: 295.w,
+                        height: 23.h,
                         decoration: BoxDecoration(
                           color: Color(0xFFF6F6F6),
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(30.r),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: (isOpen)
                               ? editcontent()
                               : showcontent(widget.c.cContent),
@@ -434,7 +439,7 @@ class _CommentlistState extends State<Commentlist> {
   Text showcontent(String title) {
     return Text(
       title,
-      style: TextStyle(fontSize: 10),
+      style: TextStyle(fontSize: 10.sp),
       textAlign: TextAlign.left,
     );
   }
@@ -443,7 +448,7 @@ class _CommentlistState extends State<Commentlist> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(30), // 둥근 모서리
+        borderRadius: BorderRadius.circular(30.r), // 둥근 모서리
         boxShadow: [
           BoxShadow(
             color: Color(0x1A000000),
@@ -458,21 +463,21 @@ class _CommentlistState extends State<Commentlist> {
           // 텍스트 입력창
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
+              padding: EdgeInsets.only(left: 6.w),
               child: TextField(
                 controller: contentController,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: "댓글을 입력하세요...",
                 ),
-                style: TextStyle(fontSize: 10),
+                style: TextStyle(fontSize: 10.sp),
               ),
             ),
           ),
 
           // 저장 버튼
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+            padding: EdgeInsets.only(right: 8.w),
             child: Row(
               children: [
                 GestureDetector(
@@ -484,21 +489,21 @@ class _CommentlistState extends State<Commentlist> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Color(0xFF000000),
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(30.r),
                     ),
-                    width: 20,
-                    height: 10,
+                    width: 20.w,
+                    height: 10.h,
                     child: Text(
                       '저장',
                       style: TextStyle(
                         color: Color(0xFFFFFFFF),
-                        fontSize: 5,
+                        fontSize: 5.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
 
                 // 취소 버튼
                 GestureDetector(
@@ -509,16 +514,16 @@ class _CommentlistState extends State<Commentlist> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Color(0xFFFFFFFF),
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(30.r),
                       border: Border.all(color: Colors.black),
                     ),
-                    width: 20,
-                    height: 10,
+                    width: 20.w,
+                    height: 10.h,
                     child: Text(
                       '취소',
                       style: TextStyle(
                         color: Color(0xFF000000),
-                        fontSize: 5,
+                        fontSize: 5.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 
@@ -18,7 +19,7 @@ class _ThemesettingState extends State<Themesetting> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '테마 설정',
           isMenu: false,
@@ -42,12 +43,12 @@ class _ThemesettingState extends State<Themesetting> {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+                  padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
                   decoration: BoxDecoration(
                     color: const Color(0x8CFFFFFF),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
                   // ✅ 고정 높이 제거 (height: 750 없앰)
                   child: Column(
@@ -56,16 +57,16 @@ class _ThemesettingState extends State<Themesetting> {
                       // ✅ 섹션 1: 가운데 위치 + 내부 텍스트는 좌측 정렬
                       Center(
                         child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 480),
+                          constraints: BoxConstraints(maxWidth: 480.w),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0.w),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   '테마 변경 내역',
                                   style: TextStyle(
-                                    fontSize: 25,
+                                    fontSize: 25.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -78,19 +79,19 @@ class _ThemesettingState extends State<Themesetting> {
                         ),
                       ),
 
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
 
                       // ✅ 섹션 2(라디오 리스트): 가운데 위치 + 폭 제한
                       Center(
                         child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 480),
+                          constraints: BoxConstraints(maxWidth: 480.w),
                           child: Container(
-                            margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                            padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+                            margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+                            padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
                             decoration: BoxDecoration(
                               color: const Color(0xB3FFFFFF),
                               border: Border.all(color: Colors.white),
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(30.r),
                             ),
                             child: Column(
                               children: [
@@ -133,6 +134,9 @@ class _ThemesettingState extends State<Themesetting> {
     );
   }
 
-  Text decotext(String title) =>
-      Text(title, textAlign: TextAlign.start, style: TextStyle(fontSize: 20));
+  Text decotext(String title) => Text(
+    title,
+    textAlign: TextAlign.start,
+    style: TextStyle(fontSize: 20.sp),
+  );
 }

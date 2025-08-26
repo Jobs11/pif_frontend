@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/screen/member_screen.dart';
 import 'package:pif_frontend/screen/timer_screen.dart';
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
         gravity: ToastGravity.BOTTOM,
         backgroundColor: const Color(0xAA000000),
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
 
       // 메인 페이지 이동
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         gravity: ToastGravity.BOTTOM,
         backgroundColor: const Color(0xAA000000),
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -56,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // 배경 이미지 (맨 아래)
@@ -71,58 +73,58 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(height: 170),
+                SizedBox(height: 170.h),
                 Text(
                   "Plan Is Fun",
                   style: TextStyle(
-                    fontSize: 64,
+                    fontSize: 64.sp,
                     color: Color(0xFF146467),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 // ...여기에 추가 위젯(로그인 폼 등) 넣기
-                const SizedBox(height: 10), // 텍스트와 이미지 사이 여백
+                SizedBox(height: 10.h), // 텍스트와 이미지 사이 여백
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Image.asset(
                       'assets/images/addicon/boat.png', // 원하는 이미지 경로
-                      width: 60, // 필요시 크기 지정
-                      height: 60,
+                      width: 60.w, // 필요시 크기 지정
+                      height: 60.h,
                       fit: BoxFit.cover,
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(width: 20.w),
                   ],
                 ),
-                SizedBox(height: 200),
+                SizedBox(height: 200.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(width: 20),
+                    SizedBox(width: 20.w),
                     Image.asset(
                       'assets/images/addicon/beach.png', // 원하는 이미지 경로
-                      width: 40, // 필요시 크기 지정
-                      height: 40,
+                      width: 40.w, // 필요시 크기 지정
+                      height: 40.h,
                       fit: BoxFit.cover,
                     ),
                   ],
                 ),
                 // 아이디 입력칸
                 Container(
-                  width: 302,
-                  height: 65,
+                  width: 302.w,
+                  height: 65.h,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20.r),
                     color: Color(0x80FFFFFF),
-                    border: Border.all(color: Colors.black, width: 2),
+                    border: Border.all(color: Colors.black, width: 2.w),
                   ),
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
                         child: SizedBox(
-                          width: 250,
+                          width: 250.w,
                           child: TextFormField(
                             controller: idController,
                             decoration: InputDecoration(
@@ -136,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                               return null; // 검증 통과
                             },
-                            style: TextStyle(fontSize: 30),
+                            style: TextStyle(fontSize: 30.sp),
                           ),
                         ),
                       ),
@@ -145,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 // 이미지 및 비밀번호 입력 칸
                 SizedBox(
-                  height: 95,
+                  height: 95.h,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -154,36 +156,36 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Image.asset(
                             'assets/images/addicon/starfish.png', // 원하는 이미지 경로
-                            width: 60, // 필요시 크기 지정
-                            height: 60,
+                            width: 60.w, // 필요시 크기 지정
+                            height: 60.h,
                             fit: BoxFit.cover,
                           ),
-                          SizedBox(width: 20),
+                          SizedBox(width: 20.w),
                         ],
                       ),
                       Positioned(
-                        top: 20,
+                        top: 20.h,
                         child: Row(
                           children: [
                             Container(
-                              width: 302,
-                              height: 65,
+                              width: 302.w,
+                              height: 65.h,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(20.r),
                                 color: Color(0x80FFFFFF),
                                 border: Border.all(
                                   color: Colors.black,
-                                  width: 2,
+                                  width: 2.w,
                                 ),
                               ),
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 20,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 20.w,
                                     ),
                                     child: SizedBox(
-                                      width: 250,
+                                      width: 250.w,
                                       child: TextFormField(
                                         controller: passwordController,
                                         decoration: InputDecoration(
@@ -198,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           }
                                           return null; // 검증 통과
                                         },
-                                        style: TextStyle(fontSize: 30),
+                                        style: TextStyle(fontSize: 30.sp),
                                       ),
                                     ),
                                   ),
@@ -212,17 +214,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                SizedBox(height: 15),
+                SizedBox(height: 15.h),
                 // 로그인 버튼 칸
                 GestureDetector(
                   onTap: _login,
                   child: Container(
-                    width: 302,
-                    height: 65,
+                    width: 302.w,
+                    height: 65.h,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(50.r),
                       color: Color(0xFF86DFD0),
-                      border: Border.all(color: Colors.black, width: 2),
+                      border: Border.all(color: Colors.black, width: 2.w),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -230,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           '로그인',
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 30.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -239,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 // 회원가입 버튼 칸
                 GestureDetector(
                   onTap: () {
@@ -249,10 +251,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   child: Container(
-                    width: 302,
-                    height: 65,
+                    width: 302.w,
+                    height: 65.h,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(50.r),
                       color: Color(0x0086DFD0),
                     ),
                     child: Row(
@@ -261,7 +263,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           '회원가입',
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 30.sp,
                             color: Color(0xFF8FC7D0),
                             fontWeight: FontWeight.bold,
                           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/model/member.dart';
@@ -9,9 +10,9 @@ Future<String?> profileUpdate(BuildContext context) {
   return showDialog<String>(
     context: context,
     barrierDismissible: true,
-    builder: (_) => const Dialog(
+    builder: (_) => Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      insetPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
       child: _ProfileUpdateDialog(),
     ),
   );
@@ -51,7 +52,7 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
 
       // 성공 시에만 창내리고 페이지 이동
@@ -72,7 +73,7 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
         gravity: ToastGravity.BOTTOM, // 위치 (TOP, CENTER, BOTTOM)
         backgroundColor: const Color(0xAA000000), // 반투명 검정
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
     } finally {}
   }
@@ -99,7 +100,7 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+        padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 20.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -107,13 +108,13 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
             Text(
               '프로필 사진 목록',
               style: TextStyle(
-                fontSize: 26,
+                fontSize: 26.sp,
                 fontWeight: FontWeight.w800,
                 color: Colors.teal.shade900,
                 letterSpacing: 1.0,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
 
             // 본문 카드
             Stack(
@@ -121,7 +122,7 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
                 Container(
                   decoration: BoxDecoration(
                     color: cardBg,
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(24.r),
                     border: Border.all(color: Colors.black),
                     boxShadow: const [
                       BoxShadow(
@@ -131,11 +132,11 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
                       ),
                     ],
                   ),
-                  padding: const EdgeInsets.fromLTRB(16, 18, 16, 12),
+                  padding: EdgeInsets.fromLTRB(16.w, 18.h, 16.w, 12.h),
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                     child: SizedBox(
-                      height: 580,
+                      height: 580.h,
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -145,79 +146,79 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
                                 clickProfile(
                                   'assets/images/character/crab.png',
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: 20.w),
 
                                 clickProfile(
                                   'assets/images/character/fish.png',
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 20.h),
                             Row(
                               children: [
                                 clickProfile(
                                   'assets/images/character/hermitcrab.png',
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: 20.w),
 
                                 clickProfile(
                                   'assets/images/character/shellfish.png',
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 20.h),
                             Row(
                               children: [
                                 clickProfile(
                                   'assets/images/character/shrimp.png',
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: 20.w),
 
                                 clickProfile(
                                   'assets/images/character/turtle.png',
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 20.h),
                             Row(
                               children: [
                                 clickProfile(
                                   'assets/images/character/seaurchin.png',
                                 ),
 
-                                SizedBox(width: 20),
+                                SizedBox(width: 20.w),
                                 clickProfile(
                                   'assets/images/character/seasquirt.png',
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 20.h),
                             Row(
                               children: [
                                 clickProfile(
                                   'assets/images/character/seaanemone.png',
                                 ),
 
-                                SizedBox(width: 20),
+                                SizedBox(width: 20.w),
                                 clickProfile(
                                   'assets/images/character/octopus.png',
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 20.h),
                             Row(
                               children: [
                                 clickProfile(
                                   'assets/images/character/shark.png',
                                 ),
 
-                                SizedBox(width: 20),
+                                SizedBox(width: 20.w),
                                 clickProfile(
                                   'assets/images/character/whale.png',
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 20.h),
                           ],
                         ),
                       ),
@@ -240,7 +241,7 @@ class __ProfileUpdateDialogState extends State<_ProfileUpdateDialog> {
         _update(img);
         Navigator.pop(context);
       },
-      child: Image.asset(img, width: 120, height: 120),
+      child: Image.asset(img, width: 120.w, height: 120.h),
     );
   }
 }

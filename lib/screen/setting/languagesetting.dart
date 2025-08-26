@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 
@@ -19,7 +20,7 @@ class _LanguagesettingState extends State<Languagesetting> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '언어 설정',
           isMenu: false,
@@ -40,24 +41,24 @@ class _LanguagesettingState extends State<Languagesetting> {
           ),
           Center(
             child: Container(
-              margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
-              padding: EdgeInsets.fromLTRB(2, 16, 2, 12),
+              margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+              padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
               decoration: BoxDecoration(
                 color: Color(0x8CFFFFFF),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
-              height: 750,
+              height: 750.h,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                      padding: EdgeInsets.fromLTRB(2, 16, 2, 12),
+                      margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+                      padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
                       decoration: BoxDecoration(
                         color: Color(0xFFFFFFFF),
                         border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                       child: Column(
                         children: [
@@ -115,6 +116,9 @@ class _LanguagesettingState extends State<Languagesetting> {
     );
   }
 
-  Text decotext(String title) =>
-      Text(title, textAlign: TextAlign.start, style: TextStyle(fontSize: 20));
+  Text decotext(String title) => Text(
+    title,
+    textAlign: TextAlign.start,
+    style: TextStyle(fontSize: 20.sp),
+  );
 }

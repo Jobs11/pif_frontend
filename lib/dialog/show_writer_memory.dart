@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 
@@ -27,13 +28,13 @@ Future<void> showWriterMemory(
         backgroundColor: Colors.transparent,
         elevation: 0,
         contentPadding: EdgeInsets.zero,
-        insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+        insetPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
         clipBehavior: Clip.antiAlias,
         content: StatefulBuilder(
           builder: (context, setState) {
             return SizedBox(
-              width: 360, // 필요시 조절
-              height: 640, // 필요시 조절 (이미지 비율에 맞게)
+              width: 360.w, // 필요시 조절
+              height: 640.h, // 필요시 조절 (이미지 비율에 맞게)
               child: Stack(
                 children: [
                   // 배경 이미지
@@ -50,27 +51,27 @@ Future<void> showWriterMemory(
                       children: [
                         // 상단 반투명 헤더
                         Container(
-                          margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 8.h),
+                          padding: EdgeInsets.symmetric(vertical: 12.w),
 
                           child: Text(
                             '기억 타이머 입력창',
-                            style: const TextStyle(
-                              fontSize: 24,
+                            style: TextStyle(
+                              fontSize: 24.sp,
                               fontWeight: FontWeight.w900,
                               color: Color(0xFF2B6C73),
                             ),
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        SizedBox(height: 80),
+                        SizedBox(height: 80.h),
                         // 폼 컨테이너 (반투명)
                         Container(
-                          margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                          margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+                          padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 12.h),
                           decoration: BoxDecoration(
                             color: Color(0x8CFFFFFF),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,66 +85,64 @@ Future<void> showWriterMemory(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
+                                        Text(
                                           '기억 날짜',
                                           style: TextStyle(
-                                            fontSize: 14,
+                                            fontSize: 14.sp,
                                             color: Color(0xFF2B6C73),
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        const SizedBox(height: 8),
+                                        SizedBox(height: 8.h),
                                         Container(
-                                          height: 40,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
+                                          height: 40.h,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 10.w,
                                           ),
                                           decoration: BoxDecoration(
                                             color: const Color(0xFFFFF8E7),
                                             borderRadius: BorderRadius.circular(
-                                              6,
+                                              6.r,
                                             ),
                                             border: Border.all(
                                               color: Colors.black87,
-                                              width: 1,
+                                              width: 1.w,
                                             ),
                                           ),
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             saveDate,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                            ),
+                                            style: TextStyle(fontSize: 14.sp),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(width: 16),
+                                  SizedBox(width: 16.w),
                                   // 기억 타이머
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
+                                        Text(
                                           '기억 타이머',
                                           style: TextStyle(
-                                            fontSize: 14,
+                                            fontSize: 14.sp,
                                             color: Color(0xFF2B6C73),
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        const SizedBox(height: 8),
+                                        SizedBox(height: 8.h),
                                         Container(
-                                          height: 40,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
+                                          height: 40.h,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 10.w,
                                           ),
                                           decoration: BoxDecoration(
                                             color: const Color(0xFFFFF8E7),
                                             borderRadius: BorderRadius.circular(
-                                              6,
+                                              6.r,
                                             ),
                                             border: Border.all(
                                               color: Colors.black87,
@@ -153,9 +152,7 @@ Future<void> showWriterMemory(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             plusTime,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                            ),
+                                            style: TextStyle(fontSize: 14.sp),
                                           ),
                                         ),
                                       ],
@@ -164,18 +161,18 @@ Future<void> showWriterMemory(
                                 ],
                               ),
 
-                              const SizedBox(height: 16),
+                              SizedBox(height: 16.h),
 
                               // 2행: 기억 내용 라벨
-                              const Text(
+                              Text(
                                 '기억 내용',
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 14.sp,
                                   color: Color(0xFF2B6C73),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: 8.h),
 
                               // 3행: 내용 박스(멀티라인)
                               Container(
@@ -191,19 +188,19 @@ Future<void> showWriterMemory(
                                   controller: contentController,
                                   minLines: 5,
                                   maxLines: 8,
-                                  style: const TextStyle(fontSize: 14),
-                                  decoration: const InputDecoration(
+                                  style: TextStyle(fontSize: 14.sp),
+                                  decoration: InputDecoration(
                                     hintText: '간단하게 기억할 내용을 입력해주세요.',
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 12,
+                                      horizontal: 12.w,
+                                      vertical: 12.h,
                                     ),
                                   ),
                                 ),
                               ),
 
-                              const SizedBox(height: 20),
+                              SizedBox(height: 20.h),
 
                               // 버튼 2개
                               Row(
@@ -234,14 +231,14 @@ Future<void> showWriterMemory(
                                           '저장',
                                           style: TextStyle(
                                             color: Color(0xFF5A3A1A),
-                                            fontSize: 15,
+                                            fontSize: 15.sp,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 16),
+                                  SizedBox(width: 16.w),
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
@@ -252,7 +249,7 @@ Future<void> showWriterMemory(
                                         decoration: BoxDecoration(
                                           color: Color(0xFFFFDCAB),
                                           borderRadius: BorderRadius.circular(
-                                            30,
+                                            30.r,
                                           ),
                                           border: Border.all(
                                             color: Colors.black,
@@ -263,7 +260,7 @@ Future<void> showWriterMemory(
                                           '취소',
                                           style: TextStyle(
                                             color: Color(0xFF5A3A1A),
-                                            fontSize: 15,
+                                            fontSize: 15.sp,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -315,7 +312,7 @@ Future<void> _registerFromDialog(
       gravity: ToastGravity.BOTTOM,
       backgroundColor: const Color(0xAA000000),
       textColor: Colors.white,
-      fontSize: 16.0,
+      fontSize: 16.0.sp,
     );
 
     // 다이얼로그 닫은 후 페이지 이동
@@ -331,7 +328,7 @@ Future<void> _registerFromDialog(
       gravity: ToastGravity.BOTTOM,
       backgroundColor: const Color(0xAA000000),
       textColor: Colors.white,
-      fontSize: 16.0,
+      fontSize: 16.0.sp,
     );
   }
 }

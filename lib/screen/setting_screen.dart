@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 import 'package:pif_frontend/screen/setting/alamsetting.dart';
@@ -18,9 +19,10 @@ class SettingScreen extends StatelessWidget {
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '설정',
           isMenu: true,
@@ -41,24 +43,24 @@ class SettingScreen extends StatelessWidget {
           ),
           Center(
             child: Container(
-              margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+              margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+              padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
               decoration: BoxDecoration(
                 color: Color(0x8CFFFFFF),
                 borderRadius: BorderRadius.circular(12),
               ),
-              height: 750,
+              height: 750.h,
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                    padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+                    margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+                    padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
                     decoration: BoxDecoration(
                       color: Color(0xB3B6EFEA),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      padding: EdgeInsets.fromLTRB(10.w, 0.h, 10.w, 0.h),
                       child: Column(
                         children: [
                           Align(
@@ -67,20 +69,20 @@ class SettingScreen extends StatelessWidget {
                               '고객지원',
                               style: TextStyle(
                                 color: Color(0xCC146467),
-                                fontSize: 25,
+                                fontSize: 25.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10.h),
                           settingrow('공지사항'),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                           settingrow('고객센터'),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                           settingrow('자주 묻는 질문(FAQ)'),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                           settingrow('문의하기 / 1:1 상담'),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                         ],
                       ),
                     ),
@@ -89,14 +91,14 @@ class SettingScreen extends StatelessWidget {
                   SizedBox(height: 10),
 
                   Container(
-                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                    padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+                    margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+                    padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
                     decoration: BoxDecoration(
                       color: Color(0xB3B6EFEA),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      padding: EdgeInsets.fromLTRB(10.w, 0.h, 10.w, 0.h),
                       child: Column(
                         children: [
                           Align(
@@ -105,12 +107,12 @@ class SettingScreen extends StatelessWidget {
                               '앱 정보',
                               style: TextStyle(
                                 color: Color(0xCC146467),
-                                fontSize: 25,
+                                fontSize: 25.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10.h),
                           GestureDetector(
                             onTap: () {
                               openScreen(
@@ -130,35 +132,35 @@ class SettingScreen extends StatelessWidget {
                             },
                             child: settingrow('버전 정보 & 업데이트 확인'),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                           GestureDetector(
                             onTap: () {
                               openScreen(context, (context) => Usersetting());
                             },
                             child: settingrow('이용약관'),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                           GestureDetector(
                             onTap: () {
                               openScreen(context, (context) => Infosetting());
                             },
                             child: settingrow('개인정보 처리방침'),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                         ],
                       ),
                     ),
                   ),
 
                   Container(
-                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                    padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+                    margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+                    padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
                     decoration: BoxDecoration(
                       color: Color(0xB3B6EFEA),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      padding: EdgeInsets.fromLTRB(10.w, 0.h, 10.w, 0.h),
                       child: Column(
                         children: [
                           Align(
@@ -167,26 +169,26 @@ class SettingScreen extends StatelessWidget {
                               '기타',
                               style: TextStyle(
                                 color: Color(0xCC146467),
-                                fontSize: 25,
+                                fontSize: 25.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 10.h),
                           GestureDetector(
                             onTap: () {
                               openScreen(context, (context) => Themesetting());
                             },
                             child: settingrow('테마 설정'),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                           GestureDetector(
                             onTap: () {
                               openScreen(context, (context) => Alamsetting());
                             },
                             child: settingrow('알림 설정'),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                           GestureDetector(
                             onTap: () {
                               openScreen(
@@ -196,9 +198,9 @@ class SettingScreen extends StatelessWidget {
                             },
                             child: settingrow('언어 설정'),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                           settingrow('실험실'),
-                          SizedBox(height: 5),
+                          SizedBox(height: 5.h),
                         ],
                       ),
                     ),
@@ -219,15 +221,15 @@ class SettingScreen extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            fontSize: 15,
+            fontSize: 15.sp,
             color: Color(0xFF146467),
             fontWeight: FontWeight.bold,
           ),
         ),
         Image.asset(
           'assets/images/addicon/setting_arrow.png',
-          width: 15,
-          height: 15,
+          width: 15.w,
+          height: 15.h,
         ),
       ],
     );

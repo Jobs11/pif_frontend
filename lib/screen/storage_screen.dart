@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
 import 'package:pif_frontend/model/currentuser.dart';
@@ -127,9 +128,10 @@ class _StorageScreenState extends State<StorageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '기억의 서랍',
           isMenu: true,
@@ -150,13 +152,13 @@ class _StorageScreenState extends State<StorageScreen> {
           ),
           Center(
             child: Container(
-              margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              padding: const EdgeInsets.fromLTRB(2, 16, 2, 12),
+              margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0.h),
+              padding: EdgeInsets.fromLTRB(2.w, 16.h, 2.w, 12.h),
               decoration: BoxDecoration(
                 color: Color(0x8CFFFFFF),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
-              height: 750,
+              height: 750.h,
               child: Column(
                 children: [
                   Row(
@@ -166,48 +168,48 @@ class _StorageScreenState extends State<StorageScreen> {
                         icon: Image.asset(
                           'assets/images/addicon/left_arrow.png',
                           fit: BoxFit.cover,
-                          width: 28,
-                          height: 28,
+                          width: 28.w,
+                          height: 28.h,
                         ),
                         onPressed: prevMonth,
                       ),
-                      SizedBox(width: 24),
+                      SizedBox(width: 24.w),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Color(0xFFFCFFD2),
                         ),
-                        width: 35,
-                        height: 35,
+                        width: 35.w,
+                        height: 35.h,
                         alignment: Alignment.center,
                         child: Text(
                           '$todayMonth월',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: 15.sp),
                         ),
                       ),
-                      SizedBox(width: 24),
+                      SizedBox(width: 24.w),
                       IconButton(
                         icon: Image.asset(
                           'assets/images/addicon/right_arrow.png',
                           fit: BoxFit.cover,
-                          width: 28,
-                          height: 28,
+                          width: 28.w,
+                          height: 28.h,
                         ),
                         onPressed: nextMonth,
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Container(
-                    padding: EdgeInsets.fromLTRB(7.5, 0, 7.5, 0),
+                    padding: EdgeInsets.fromLTRB(7.5.w, 0.h, 7.5.w, 0.h),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(30.r),
                       border: Border.all(color: Colors.black),
                       color: Color(0x80FFFFFF),
                     ),
                     width: double.infinity,
-                    height: 37,
+                    height: 37.h,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -233,17 +235,17 @@ class _StorageScreenState extends State<StorageScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 8.5),
+                  SizedBox(height: 8.5.h),
                   Container(
                     decoration: BoxDecoration(color: Color(0xFF6AD9D4)),
                     width: double.infinity,
-                    height: 6,
+                    height: 6.h,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Container(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    padding: EdgeInsets.fromLTRB(15.w, 0.h, 15.w, 0.h),
                     child: SizedBox(
-                      height: 580,
+                      height: 580.h,
                       child: FutureBuilder<List<Records>>(
                         future: records, // ← 서버 호출 Future
                         builder: (context, snapshot) {
@@ -267,7 +269,7 @@ class _StorageScreenState extends State<StorageScreen> {
                           return ListView.separated(
                             itemCount: items.length,
                             separatorBuilder: (context, index) =>
-                                const SizedBox(height: 13),
+                                SizedBox(height: 13.h),
                             itemBuilder: (context, index) {
                               final r = items[index];
 
@@ -282,17 +284,17 @@ class _StorageScreenState extends State<StorageScreen> {
                               return Container(
                                 decoration: BoxDecoration(
                                   color: const Color(0xFFCCFAF8),
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(30.r),
                                   border: Border.all(color: Colors.black),
                                 ),
                                 width: double.infinity,
-                                height: 117,
+                                height: 117.h,
                                 child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    15,
-                                    6,
-                                    15,
-                                    5,
+                                  padding: EdgeInsets.fromLTRB(
+                                    15.w,
+                                    6.h,
+                                    15.w,
+                                    5.h,
                                   ),
                                   child: Column(
                                     children: [
@@ -309,12 +311,12 @@ class _StorageScreenState extends State<StorageScreen> {
                                           inputYT(displayTimer, 15),
                                         ],
                                       ),
-                                      const SizedBox(height: 8),
+                                      SizedBox(height: 8.h),
                                       Container(
                                         alignment: Alignment.centerLeft,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
-                                            30,
+                                            30.r,
                                           ),
                                           color: const Color(0XFFFFFFFF),
                                           border: Border.all(
@@ -322,10 +324,10 @@ class _StorageScreenState extends State<StorageScreen> {
                                           ),
                                         ),
                                         width: double.infinity,
-                                        height: 54,
+                                        height: 54.h,
                                         child: Text(
                                           '  $memo',
-                                          style: const TextStyle(fontSize: 15),
+                                          style: TextStyle(fontSize: 15.sp),
                                         ),
                                       ),
                                     ],
@@ -351,15 +353,15 @@ class _StorageScreenState extends State<StorageScreen> {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15.r),
         color: dayColors,
       ),
-      width: 35,
-      height: 30,
+      width: 35.w,
+      height: 30.h,
       child: Text(
         day,
         style: TextStyle(
-          fontSize: 15,
+          fontSize: 15.sp,
           color: Colors.black,
           decoration: isDay ? TextDecoration.underline : TextDecoration.none,
           decorationColor: Colors.blue, // 밑줄 색
@@ -377,8 +379,8 @@ class _StorageScreenState extends State<StorageScreen> {
         color: Color(0Xffffffff),
         border: Border.all(color: Colors.black),
       ),
-      width: 140,
-      height: 40,
+      width: 140.w,
+      height: 40.h,
       child: Text(
         title,
         style: TextStyle(fontSize: size, fontWeight: FontWeight.bold),

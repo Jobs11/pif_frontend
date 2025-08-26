@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:intl/intl.dart';
@@ -49,7 +50,7 @@ class _TimerScreenState extends State<TimerScreen> {
       gravity: ToastGravity.BOTTOM,
       backgroundColor: const Color(0xAA000000),
       textColor: Colors.white,
-      fontSize: 16.0,
+      fontSize: 16.0.sp,
     );
 
     // print("year: $year, month: $month, day: $day");
@@ -70,7 +71,7 @@ class _TimerScreenState extends State<TimerScreen> {
       gravity: ToastGravity.BOTTOM,
       backgroundColor: const Color(0xAA000000),
       textColor: Colors.white,
-      fontSize: 16.0,
+      fontSize: 16.0.sp,
     );
     setState(() {
       isRuning = false;
@@ -84,7 +85,7 @@ class _TimerScreenState extends State<TimerScreen> {
       gravity: ToastGravity.BOTTOM,
       backgroundColor: const Color(0xAA000000),
       textColor: Colors.white,
-      fontSize: 16.0,
+      fontSize: 16.0.sp,
     );
     setState(() {
       isRuning = false;
@@ -100,9 +101,10 @@ class _TimerScreenState extends State<TimerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(43),
+        preferredSize: Size.fromHeight(43.h),
         child: PifAppbar(
           titlename: '기억 타이머',
           isMenu: true,
@@ -131,31 +133,31 @@ class _TimerScreenState extends State<TimerScreen> {
                   children: [
                     Image.asset(
                       'assets/images/addicon/stop_interface.png',
-                      width: 411, // 필요시 크기 지정
-                      height: 360,
+                      width: 411.w, // 필요시 크기 지정
+                      height: 360.h,
                       fit: BoxFit.cover,
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.only(top: 50),
+                      padding: EdgeInsets.only(top: 50.h),
                       child: Text(
                         (totalSeconds != 0) ? format(totalSeconds) : '00:00:00',
                         style: TextStyle(
-                          fontSize: 35,
+                          fontSize: 35.sp,
                           color: Color(0xFF146467),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 // 타이머 시작 날짜 시간
                 Column(
                   children: [
                     Text(
                       '기억 흐르기 시작 시간',
                       style: TextStyle(
-                        fontSize: 35,
+                        fontSize: 35.sp,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF146467),
                       ),
@@ -166,19 +168,19 @@ class _TimerScreenState extends State<TimerScreen> {
                           ? startDate
                           : '0000. 00. 00. 00:00:00',
                       style: TextStyle(
-                        fontSize: 35,
+                        fontSize: 35.sp,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF146467),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 75),
+                SizedBox(height: 75.h),
                 // 시작과 중지와 일시 정지 버튼
                 SizedBox(
-                  width: 200,
+                  width: 200.w,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -190,8 +192,8 @@ class _TimerScreenState extends State<TimerScreen> {
                             isRuning
                                 ? 'assets/images/addicon/pause.png'
                                 : 'assets/images/addicon/play.png',
-                            width: 64, // 필요시 크기 지정
-                            height: 64,
+                            width: 64.w, // 필요시 크기 지정
+                            height: 64.h,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -202,8 +204,8 @@ class _TimerScreenState extends State<TimerScreen> {
                           },
                           child: Image.asset(
                             'assets/images/addicon/reset.png',
-                            width: 64, // 필요시 크기 지정
-                            height: 64,
+                            width: 64.w, // 필요시 크기 지정
+                            height: 64.h,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -232,15 +234,15 @@ class _TimerScreenState extends State<TimerScreen> {
                             gravity: ToastGravity.BOTTOM,
                             backgroundColor: const Color(0xAA000000),
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: 16.0.h,
                           );
                     onResetPressed();
                   },
                   child: Container(
-                    width: 244,
-                    height: 38,
+                    width: 244.w,
+                    height: 38.h,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(25.r),
                       color: Color(0xFFF9CC89),
                       border: Border.all(color: Color(0xFF000000)),
                     ),
@@ -248,7 +250,7 @@ class _TimerScreenState extends State<TimerScreen> {
                       textAlign: TextAlign.center,
                       '기억 저장',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 25.sp,
                         color: Color(0xFF5A3A1A),
                         fontWeight: FontWeight.bold,
                       ),

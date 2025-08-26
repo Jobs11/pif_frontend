@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/model/currentuser.dart';
 import 'package:pif_frontend/screen/profile_screen.dart';
 import 'package:pif_frontend/screen/setting_screen.dart';
@@ -37,15 +38,15 @@ class PifSidbar extends StatelessWidget {
                               CurrentUser.instance.member?.mPaint ??
                                   'assets/images/addicon/user.png',
                               fit: BoxFit.cover,
-                              width: 90,
-                              height: 90,
+                              width: 90.w,
+                              height: 90.h,
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8.h),
                             Text(
                               CurrentUser.instance.member?.mNickname ?? "손님",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Color(0xFF146467),
-                                fontSize: 24,
+                                fontSize: 24.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -69,8 +70,8 @@ class PifSidbar extends StatelessWidget {
                           },
                           child: Image.asset(
                             'assets/images/addicon/setting.png', // 넣고 싶은 이미지 경로
-                            width: 30,
-                            height: 30,
+                            width: 30.w,
+                            height: 30.h,
                           ),
                         ),
                       ),
@@ -80,14 +81,14 @@ class PifSidbar extends StatelessWidget {
                 ListTile(
                   leading: Image.asset(
                     'assets/images/addicon/stopwatch.png',
-                    width: 20,
-                    height: 20,
+                    width: 20.w,
+                    height: 20.h,
                   ),
                   title: Text(
                     '기억 타이머',
                     style: TextStyle(
                       color: Color(0xFF146467),
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -102,14 +103,14 @@ class PifSidbar extends StatelessWidget {
                 ListTile(
                   leading: Image.asset(
                     'assets/images/addicon/storage.png',
-                    width: 20,
-                    height: 20,
+                    width: 20.w,
+                    height: 20.h,
                   ),
                   title: Text(
                     '기억의 서랍',
                     style: TextStyle(
                       color: Color(0xFF146467),
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -124,14 +125,14 @@ class PifSidbar extends StatelessWidget {
                 ListTile(
                   leading: Image.asset(
                     'assets/images/addicon/sns.png',
-                    width: 20,
-                    height: 20,
+                    width: 20.w,
+                    height: 20.h,
                   ),
                   title: Text(
                     '기억 속 이야기',
                     style: TextStyle(
                       color: Color(0xFF146467),
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -146,14 +147,14 @@ class PifSidbar extends StatelessWidget {
                 ListTile(
                   leading: Image.asset(
                     'assets/images/addicon/home.png',
-                    width: 20,
-                    height: 20,
+                    width: 20.w,
+                    height: 20.h,
                   ),
                   title: Text(
                     '기억의 주인',
                     style: TextStyle(
                       color: Color(0xFF146467),
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
