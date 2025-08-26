@@ -200,7 +200,7 @@ class _StorageScreenState extends State<StorageScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 10.h),
                   Container(
                     padding: EdgeInsets.fromLTRB(7.5.w, 0.h, 7.5.w, 0.h),
                     decoration: BoxDecoration(

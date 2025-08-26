@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pif_frontend/bar/pif_appbar.dart';
 import 'package:pif_frontend/bar/pif_sidbar.dart';
+import 'package:pif_frontend/screen/setting/infosetting.dart';
+import 'package:pif_frontend/screen/setting/usersetting.dart';
+import 'package:pif_frontend/utils/functions.dart';
 
 class Appinfosetting extends StatelessWidget {
   const Appinfosetting({super.key});
@@ -98,6 +101,7 @@ class Appinfosetting extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () {
                         // 이용약관 페이지 이동
+                        openScreen(context, (context) => Usersetting());
                       },
                       child: const Text("이용약관"),
                     ),
@@ -108,6 +112,7 @@ class Appinfosetting extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () {
                         // 개인정보 처리방침 페이지 이동
+                        openScreen(context, (context) => Infosetting());
                       },
                       child: const Text("개인정보 처리방침"),
                     ),
